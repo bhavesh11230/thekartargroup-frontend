@@ -38,7 +38,6 @@ const AdminDashboard: React.FC = () => {
                 className="h-10 w-10"
               />
               <h1 className="text-2xl font-bold text-[#BF9B30]">Kartar Group Admin</h1>
-              <h1 className="text-2xl font-bold text-kartar-gold">Kartar Group Admin</h1>
             </div>
             <button
               onClick={handleLogout}
