@@ -90,7 +90,6 @@ const AdminLogin: React.FC = () => {
                   type="email"
                   autoComplete="email"
                   required
-                  className="appearance-none relative block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#BF9B30] focus:border-transparent"
                   className="appearance-none relative block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-2 focus:ring-kartar-gold focus:border-transparent"
                   placeholder="admin@example.com"
                   value={formData.email}
@@ -114,7 +113,6 @@ const AdminLogin: React.FC = () => {
                   autoComplete="current-password"
                   required
                   className="appearance-none relative block w-full pl-10 pr-12 py-3 border border-gray-300 rounded-lg placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#BF9B30] focus:border-transparent"
-                  className="appearance-none relative block w-full pl-10 pr-12 py-3 border border-gray-300 rounded-lg placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-2 focus:ring-kartar-gold focus:border-transparent"
                   placeholder="Enter your password"
                   value={formData.password}
                   onChange={handleChange}
@@ -137,7 +135,6 @@ const AdminLogin: React.FC = () => {
               <button
                 type="submit"
                 disabled={loading}
-                className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-lg text-white bg-[#BF9B30] hover:bg-[#A67B1A] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#BF9B30] disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300"
                 className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-lg text-white bg-kartar-gold hover:bg-kartar-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-kartar-gold disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300"
               >
                 {loading ? (
