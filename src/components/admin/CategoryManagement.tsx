@@ -36,26 +36,39 @@ const CategoryManagement: React.FC = () => {
   };
 
   const handleCreate = async (e: React.FormEvent) => {
-    e.preventDefault();
+  e.preventDefault();
 
-    if (!newCategoryName.trim()) {
-      toast.error('Please enter a category name');
-      return;
-    }
+  const trimmedName = newCategoryName.trim();
 
-    try {
-      setCreating(true);
-      await apiService.createCategory({ name: newCategoryName.trim() });
-      toast.success('Category created successfully');
-      setNewCategoryName('');
-      fetchCategories();
-    } catch (error) {
-      console.error('Error creating category:', error);
-      toast.error('Failed to create category');
-    } finally {
-      setCreating(false);
-    }
-  };
+  if (!trimmedName) {
+    toast.error('Please enter a category name');
+    return;
+  }
+
+  // Case-insensitive duplicate check
+  const exists = categories.some(
+    (cat) => cat.name.toLowerCase() === trimmedName.toLowerCase()
+  );
+
+  if (exists) {
+    toast.error('Category already exists');
+    return;
+  }
+
+  try {
+    setCreating(true);
+    await apiService.createCategory({ name: trimmedName });
+    toast.success('Category created successfully');
+    setNewCategoryName('');
+    fetchCategories();
+  } catch (error) {
+    console.error('Error creating category:', error);
+    toast.error('Failed to create category');
+  } finally {
+    setCreating(false);
+  }
+};
+
 
   const confirmDelete = (category: Category) => {
     setSelectedCategory(category);
