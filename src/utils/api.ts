@@ -30,6 +30,7 @@ export const apiService = {
   // Cards/Products
   getAllCards: () => api.get('/card'),
   getCardsByCategory: (categoryId: string) => api.get(`/card/category/${categoryId}`),
+  getCardById: (id: string) => api.get(`/card/${id}`),
   createCard: (formData: FormData) => api.post('/card', formData, {
     headers: { 'Content-Type': 'multipart/form-data' }
   }),

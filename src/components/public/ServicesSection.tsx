@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { apiService } from "../../utils/api";
 import { toast } from "react-toastify";
+import { Link } from "react-router-dom";
 
 interface Category {
   _id: string;
@@ -72,6 +73,8 @@ const ServicesSection: React.FC = () => {
         } else {
           console.warn("Invalid products data", res.data);
         }
+
+          console.log("Fetched products:", data);
 
         setProducts(data);
         setCurrentPage(1);
@@ -168,99 +171,105 @@ const ServicesSection: React.FC = () => {
         </div>
 
         {/* Category Navigator */}
-        <div className="relative mb-12">
-          <div className="flex items-center">
+        {/* Category Navigator */}
+<div className="relative mb-12">
+  <div className="flex items-center">
+    <button
+      onClick={() => scrollCategories("left")}
+      className="flex-shrink-0 p-2 bg-white rounded-full shadow-md hover:shadow-lg transition-shadow duration-200 mr-4"
+    >
+      <ChevronLeft className="h-5 w-5 text-[rgb(212,175,55)]" />
+    </button>
+
+    <div
+      id="categories-container"
+      className="flex-1 overflow-x-auto scrollbar-hide"
+      style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+    >
+      <div className="flex space-x-4 pb-2">
+        {loadingCategories ? (
+          <p className="text-gray-500">Loading categories...</p>
+        ) : (
+          categories.map((category) => (
             <button
-              onClick={() => scrollCategories("left")}
-              className="flex-shrink-0 p-2 bg-white rounded-full shadow-md hover:shadow-lg transition-shadow duration-200 mr-4"
+              key={category._id}
+              onClick={() => handleCategoryChange(category._id)}
+              className={`flex-shrink-0 px-6 py-3 rounded-full font-medium transition-all duration-300 whitespace-nowrap ${
+                selectedCategory === category._id
+                  ? "bg-[rgb(212,175,55)] text-white shadow-lg transform scale-105"
+                  : "bg-white text-gray-700 hover:bg-[rgb(212,175,55)/10] hover:text-[rgb(212,175,55)] shadow-md"
+              }`}
             >
-              <ChevronLeft className="h-5 w-5 text-kartar-gold" />
+              {category.name}
             </button>
+          ))
+        )}
+      </div>
+    </div>
 
-            <div
-              id="categories-container"
-              className="flex-1 overflow-x-auto scrollbar-hide"
-              style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
-            >
-              <div className="flex space-x-4 pb-2">
-                {loadingCategories ? (
-                  <p className="text-gray-500">Loading categories...</p>
-                ) : (
-                  categories.map((category) => (
-                    <button
-                      key={category._id}
-                      onClick={() => handleCategoryChange(category._id)}
-                      className={`flex-shrink-0 px-6 py-3 rounded-full font-medium transition-all duration-300 whitespace-nowrap ${
-                        selectedCategory === category._id
-                          ? "bg-orange-400 text-white shadow-lg transform scale-105"
-                          : "bg-white text-gray-700 hover:bg-gray-100 shadow-md"
-                      }`}
-                    >
-                      {category.name}
-                    </button>
-                  ))
-                )}
-              </div>
-            </div>
+    <button
+      onClick={() => scrollCategories("right")}
+      className="flex-shrink-0 p-2 bg-white rounded-full shadow-md hover:shadow-lg transition-shadow duration-200 ml-4"
+    >
+      <ChevronRight className="h-5 w-5 text-[rgb(212,175,55)]" />
+    </button>
+  </div>
+</div>
 
-            <button
-              onClick={() => scrollCategories("right")}
-              className="flex-shrink-0 p-2 bg-white rounded-full shadow-md hover:shadow-lg transition-shadow duration-200 ml-4"
-            >
-              <ChevronRight className="h-5 w-5 text-orange-600" />
-            </button>
-          </div>
-        </div>
-
-        {/* Products Grid */}
+{/* Products Grid */}
+<div className="max-h-[600px] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-10 pr-1 mb-8">
+  {loadingProducts ? (
+    <p className="text-center text-gray-500 py-12">Loading products...</p>
+  ) : currentProducts.length > 0 ? (
+    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {currentProducts.map((product) => (
         <div
-          id="products-grid"
-          className="max-h-[600px] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-10 pr-1 mb-8"
+          key={product._id}
+          className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden transform hover:-translate-y-2"
         >
-          {loadingProducts ? (
-            <p className="text-center text-gray-500 py-12">
-              Loading products...
-            </p>
-          ) : currentProducts.length > 0 ? (
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {currentProducts.map((product) => (
-                <div
-                  key={product._id}
-                  className="bg-white rounded-lg shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden transform hover:-translate-y-1"
-                >
-                  <div className="h-48 bg-gray-200 overflow-hidden">
-                    <img
-                      src={product.image.url}
-                      alt={product.title}
-                      className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
-                    />
-                  </div>
-                  <div className="p-6">
-                    <h3 className="text-xl font-semibold text-kartar-secondary mb-3">
-                      {product.title}
-                    </h3>
+          <div className="h-56 bg-gray-200 overflow-hidden rounded-t-xl">
+            <img
+              src={product.image.url}
+              alt={product.title}
+              className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+            />
+          </div>
+         <div className="p-6 flex flex-col min-h-[200px]">
+  <div className="flex-grow">
+    <h3 className="text-xl font-semibold text-kartar-secondary mb-3 truncate">
+      {product.title}
+    </h3>
 
-                    <div className="mb-3">
-                      <span className="inline-block px-3 py-1 bg-orange-100 text-orange-800 text-sm font-medium rounded-full">
-                        {product.category?.name || "Unknown Category"}
-                      </span>
-                    </div>
+    <div className="mb-4">
+      <span className="inline-block px-4 py-1 bg-[rgb(212,175,55)/10] text-[rgb(212,175,55)] text-sm font-semibold rounded-full shadow-sm">
+        {product.category?.name || "Unknown Category"}
+      </span>
+    </div>
 
-                    <p className="text-gray-600 leading-relaxed mb-4 text-sm">
-                      {product.description}
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          ) : (
-            <div className="text-center py-12">
-              <p className="text-gray-600 text-lg">
-                No products available in this category.
-              </p>
-            </div>
-          )}
+    <p className="text-gray-600 leading-relaxed mb-4 text-sm line-clamp-2">
+      {product.description}
+    </p>
+  </div>
+
+  <Link
+  to={`/product/${product._id}`}
+  className="self-start inline-flex items-center gap-2 px-5 py-2.5 bg-[rgb(212,175,55)] text-white text-sm font-semibold rounded-full shadow-md hover:shadow-lg hover:bg-[rgb(212,175,55)/80] transition-all duration-300 ease-in-out"
+>
+  View Details
+  <ChevronRight className="w-4 h-4" />
+</Link>
+</div>
+
         </div>
+      ))}
+    </div>
+  ) : (
+    <div className="text-center py-12">
+      <p className="text-gray-600 text-lg">No products available in this category.</p>
+    </div>
+  )}
+</div>
+
 
         {/* Pagination */}
         {!loadingProducts && totalPages > 1 && (
