@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { apiService } from '../../utils/api';
 import { toast } from 'react-toastify';
-import { Trash2, Loader2, Mail, Phone, Calendar } from 'lucide-react';
+import { Trash2, Loader2, Mail, Calendar } from 'lucide-react';
 
 interface Contact {
   _id: string;
   name: string;
   email: string;
-  phone: string;
   message: string;
   createdAt: string;
 }
@@ -15,6 +14,8 @@ interface Contact {
 const ContactManagement: React.FC = () => {
   const [contacts, setContacts] = useState<Contact[]>([]);
   const [loading, setLoading] = useState(true);
+  const [showDialog, setShowDialog] = useState(false);
+  const [selectedContact, setSelectedContact] = useState<Contact | null>(null);
 
   useEffect(() => {
     fetchContacts();
@@ -24,7 +25,7 @@ const ContactManagement: React.FC = () => {
     try {
       setLoading(true);
       const response = await apiService.getAllContacts();
-      setContacts(response.data);
+      setContacts(response.data.contacts); // <- use .contacts here
     } catch (error) {
       console.error('Error fetching contacts:', error);
       toast.error('Failed to load contact messages');
@@ -33,18 +34,24 @@ const ContactManagement: React.FC = () => {
     }
   };
 
-  const handleDelete = async (id: string, name: string) => {
-    if (!window.confirm(`Are you sure you want to delete the message from "${name}"?`)) {
-      return;
-    }
+  const confirmDelete = (contact: Contact) => {
+    setSelectedContact(contact);
+    setShowDialog(true);
+  };
+
+  const handleDelete = async () => {
+    if (!selectedContact) return;
 
     try {
-      await apiService.deleteContact(id);
+      await apiService.deleteContact(selectedContact._id);
       toast.success('Contact message deleted successfully');
       fetchContacts();
     } catch (error) {
       console.error('Error deleting contact:', error);
       toast.error('Failed to delete contact message');
+    } finally {
+      setShowDialog(false);
+      setSelectedContact(null);
     }
   };
 
@@ -69,7 +76,9 @@ const ContactManagement: React.FC = () => {
   return (
     <div className="space-y-6">
       <div className="bg-white rounded-lg shadow-md p-6">
-        <h2 className="text-2xl font-semibold text-kartar-gold mb-6">Contact Messages</h2>
+        <h2 className="text-2xl font-semibold text-kartar-gold mb-6">
+          Contact Messages
+        </h2>
 
         {contacts.length === 0 ? (
           <div className="text-center py-12">
@@ -87,7 +96,7 @@ const ContactManagement: React.FC = () => {
                     <h3 className="text-lg font-semibold text-gray-800 mb-2">
                       {contact.name}
                     </h3>
-                    
+
                     <div className="flex flex-wrap gap-4 mb-4">
                       <div className="flex items-center space-x-2 text-gray-600">
                         <Mail className="h-4 w-4" />
@@ -98,33 +107,25 @@ const ContactManagement: React.FC = () => {
                           {contact.email}
                         </a>
                       </div>
-                      
-                      {contact.phone && (
-                        <div className="flex items-center space-x-2 text-gray-600">
-                          <Phone className="h-4 w-4" />
-                          <a
-                            href={`tel:${contact.phone}`}
-                            className="hover:text-[#BF9B30] transition-colors duration-200"
-                          >
-                            {contact.phone}
-                          </a>
-                        </div>
-                      )}
-                      
+
                       <div className="flex items-center space-x-2 text-gray-500">
                         <Calendar className="h-4 w-4" />
                         <span>{formatDate(contact.createdAt)}</span>
                       </div>
                     </div>
-                    
+
                     <div className="bg-gray-50 rounded-lg p-4">
-                      <h4 className="font-medium text-gray-800 mb-2">Message:</h4>
-                      <p className="text-gray-700 leading-relaxed">{contact.message}</p>
+                      <h4 className="font-medium text-gray-800 mb-2">
+                        Message:
+                      </h4>
+                      <p className="text-gray-700 leading-relaxed">
+                        {contact.message}
+                      </p>
                     </div>
                   </div>
-                  
+
                   <button
-                    onClick={() => handleDelete(contact._id, contact.name)}
+                    onClick={() => confirmDelete(contact)}
                     className="flex items-center space-x-2 px-3 py-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors duration-200 ml-4"
                   >
                     <Trash2 className="h-4 w-4" />
@@ -136,6 +137,36 @@ const ContactManagement: React.FC = () => {
           </div>
         )}
       </div>
+
+      {/* Delete Confirmation Dialog */}
+      {showDialog && selectedContact && (
+        <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+          <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-md">
+            <h3 className="text-lg font-semibold text-gray-800 mb-4">
+              Confirm Delete
+            </h3>
+            <p className="text-gray-600 mb-6">
+              Are you sure you want to delete the message from{' '}
+              <span className="font-medium">{selectedContact.name}</span>?
+            </p>
+
+            <div className="flex justify-end space-x-3">
+              <button
+                onClick={() => setShowDialog(false)}
+                className="px-4 py-2 rounded-lg border border-gray-300 text-gray-600 hover:bg-gray-100 transition"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleDelete}
+                className="px-4 py-2 rounded-lg bg-red-600 text-white hover:bg-red-700 transition"
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

@@ -14,6 +14,10 @@ const CategoryManagement: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [creating, setCreating] = useState(false);
 
+  // Modal states
+  const [showDialog, setShowDialog] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState<Category | null>(null);
+
   useEffect(() => {
     fetchCategories();
   }, []);
@@ -33,7 +37,7 @@ const CategoryManagement: React.FC = () => {
 
   const handleCreate = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!newCategoryName.trim()) {
       toast.error('Please enter a category name');
       return;
@@ -53,25 +57,33 @@ const CategoryManagement: React.FC = () => {
     }
   };
 
-  const handleDelete = async (id: string, name: string) => {
-    if (!window.confirm(`Are you sure you want to delete the category "${name}"?`)) {
-      return;
-    }
+  const confirmDelete = (category: Category) => {
+    setSelectedCategory(category);
+    setShowDialog(true);
+  };
+
+  const handleDelete = async () => {
+    if (!selectedCategory) return;
 
     try {
-      await apiService.deleteCategory(id);
+      await apiService.deleteCategory(selectedCategory._id);
       toast.success('Category deleted successfully');
       fetchCategories();
     } catch (error) {
       console.error('Error deleting category:', error);
       toast.error('Failed to delete category');
+    } finally {
+      setShowDialog(false);
+      setSelectedCategory(null);
     }
   };
 
   return (
     <div className="space-y-6">
       <div className="bg-white rounded-lg shadow-md p-6">
-        <h2 className="text-2xl font-semibold text-kartar-gold mb-6">Category Management</h2>
+        <h2 className="text-2xl font-semibold text-kartar-gold mb-6">
+          Category Management
+        </h2>
 
         {/* Add New Category Form */}
         <form onSubmit={handleCreate} className="flex gap-4 mb-8">
@@ -106,16 +118,20 @@ const CategoryManagement: React.FC = () => {
         ) : (
           <div className="space-y-2">
             {categories.length === 0 ? (
-              <p className="text-gray-500 text-center py-8">No categories found. Create your first category above.</p>
+              <p className="text-gray-500 text-center py-8">
+                No categories found. Create your first category above.
+              </p>
             ) : (
               categories.map((category) => (
                 <div
                   key={category._id}
                   className="flex items-center justify-between p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors duration-200"
                 >
-                  <span className="font-medium text-gray-800">{category.name}</span>
+                  <span className="font-medium text-gray-800">
+                    {category.name}
+                  </span>
                   <button
-                    onClick={() => handleDelete(category._id, category.name)}
+                    onClick={() => confirmDelete(category)}
                     className="flex items-center space-x-2 px-3 py-1 text-red-600 hover:bg-red-50 rounded-lg transition-colors duration-200"
                   >
                     <Trash2 className="h-4 w-4" />
@@ -127,6 +143,36 @@ const CategoryManagement: React.FC = () => {
           </div>
         )}
       </div>
+
+      {/* Delete Confirmation Dialog */}
+      {showDialog && selectedCategory && (
+        <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+          <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-md">
+            <h3 className="text-lg font-semibold text-gray-800 mb-4">
+              Confirm Delete
+            </h3>
+            <p className="text-gray-600 mb-6">
+              Are you sure you want to delete the category{' '}
+              <span className="font-medium">{selectedCategory.name}</span>?
+            </p>
+
+            <div className="flex justify-end space-x-3">
+              <button
+                onClick={() => setShowDialog(false)}
+                className="px-4 py-2 rounded-lg border border-gray-300 text-gray-600 hover:bg-gray-100 transition"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleDelete}
+                className="px-4 py-2 rounded-lg bg-red-600 text-white hover:bg-red-700 transition"
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
