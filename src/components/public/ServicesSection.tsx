@@ -56,7 +56,7 @@ const ServicesSection: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>('1');
   const [currentPage, setCurrentPage] = useState(1);
   const [categoryScrollPosition, setCategoryScrollPosition] = useState(0);
-  const productsPerPage = 6;
+  const productsPerPage = 9; // 3 rows × 3 products = 9 products per page
 
   useEffect(() => {
     // Load products for the selected category
@@ -170,7 +170,7 @@ const ServicesSection: React.FC = () => {
                     onClick={() => handleCategoryChange(category._id)}
                     className={`flex-shrink-0 px-6 py-3 rounded-full font-medium transition-all duration-300 whitespace-nowrap ${
                       selectedCategory === category._id
-                        ? 'bg-kartar-gold text-white shadow-lg transform scale-105'
+                        ? 'bg-orange-400 text-white shadow-lg transform scale-105'
                         : 'bg-white text-gray-700 hover:bg-gray-100 shadow-md'
                     }`}
                   >
@@ -184,7 +184,7 @@ const ServicesSection: React.FC = () => {
               onClick={() => scrollCategories('right')}
               className="flex-shrink-0 p-2 bg-white rounded-full shadow-md hover:shadow-lg transition-shadow duration-200 ml-4"
             >
-              <ChevronRight className="h-5 w-5 text-kartar-gold" />
+              <ChevronRight className="h-5 w-5 text-orange-600" />
             </button>
           </div>
         </div>
@@ -192,7 +192,7 @@ const ServicesSection: React.FC = () => {
         {/* Products Grid with Scrollbar */}
         <div 
           id="products-grid" 
-          className="max-h-[800px] overflow-y-auto scrollbar-thin scrollbar-thumb-kartar-gold scrollbar-track-gray-100 pr-2 mb-8"
+          className="max-h-[600px] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-10 pr-1 mb-8"
         >
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {currentProducts.map((product) => (
@@ -213,7 +213,7 @@ const ServicesSection: React.FC = () => {
                   </h3>
                   
                   <div className="mb-3">
-                    <span className="inline-block px-3 py-1 bg-kartar-light text-kartar-dark text-sm font-medium rounded-full">
+                    <span className="inline-block px-3 py-1 bg-orange-100 text-orange-800 text-sm font-medium rounded-full">
                       {getCategoryName(product.category)}
                     </span>
                   </div>
@@ -221,8 +221,6 @@ const ServicesSection: React.FC = () => {
                   <p className="text-gray-600 leading-relaxed mb-4 text-sm">
                     {product.description}
                   </p>
-                  
-                
                 </div>
               </div>
             ))}
@@ -249,7 +247,7 @@ const ServicesSection: React.FC = () => {
                   disabled={pageNumber === '...'}
                   className={`px-3 py-2 text-sm font-medium rounded-lg transition-all duration-200 ${
                     currentPage === pageNumber
-                      ? 'bg-kartar-gold text-white shadow-md'
+                      ? 'bg-orange-600 text-white shadow-md'
                       : pageNumber === '...'
                       ? 'text-gray-400 cursor-default'
                       : 'text-gray-700 bg-white border border-gray-300 hover:bg-gray-100'

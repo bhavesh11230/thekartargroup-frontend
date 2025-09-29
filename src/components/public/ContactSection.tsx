@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 import { apiService } from '../../utils/api';
 import { toast } from 'react-toastify';
-import { Mail, Phone, MessageCircle, Send } from 'lucide-react';
+import { Mail, MessageCircle, Send } from 'lucide-react';
 
 const ContactSection: React.FC = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    phone: '',
     message: ''
   });
   const [loading, setLoading] = useState(false);
@@ -34,7 +33,6 @@ const ContactSection: React.FC = () => {
       setFormData({
         name: '',
         email: '',
-        phone: '',
         message: ''
       });
     } catch (error) {
@@ -157,21 +155,6 @@ const ContactSection: React.FC = () => {
                     required
                     className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-kartar-gold focus:border-transparent transition-all duration-300"
                     placeholder="your.email@example.com"
-                  />
-                </div>
-
-                <div>
-                  <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">
-                    Phone
-                  </label>
-                  <input
-                    type="tel"
-                    id="phone"
-                    name="phone"
-                    value={formData.phone}
-                    onChange={handleChange}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-kartar-gold focus:border-transparent transition-all duration-300"
-                    placeholder="Your phone number"
                   />
                 </div>
 
