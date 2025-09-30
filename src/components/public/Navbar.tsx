@@ -1,4 +1,4 @@
- import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const Navbar: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -28,7 +28,7 @@ const Navbar: React.FC = () => {
     <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 w-full ${
       isScrolled ? 'shadow-lg bg-white' : 'bg-white'
     }`}>
-      <div className="container mx-auto px-4 py-4 max-w-7xl flex items-center justify-between">
+      <div className="container mx-auto px-4 py-6 max-w-7xl flex items-center justify-between">
         {/* Logo */}
         <div className="flex items-center space-x-3">
           <img 
@@ -41,13 +41,13 @@ const Navbar: React.FC = () => {
 
         {/* Desktop Navigation Links */}
         <div className="hidden md:flex items-center space-x-8">
-          <button onClick={() => scrollToSection('about')} className="text-gray-700 hover:text-kartar-gold transition-colors duration-300 font-medium">
+          <button onClick={() => scrollToSection('about')} className="text-gray-700 hover:text-kartar-gold transition-colors duration-300 font-bold">
             About
           </button>
-          <button onClick={() => scrollToSection('services')} className="text-gray-700 hover:text-kartar-gold transition-colors duration-300 font-medium">
+          <button onClick={() => scrollToSection('services')} className="text-gray-700 hover:text-kartar-gold transition-colors duration-300 font-bold">
             Services & Products
           </button>
-          <button onClick={() => scrollToSection('contact')} className="text-gray-700 hover:text-kartar-gold transition-colors duration-300 font-medium">
+          <button onClick={() => scrollToSection('contact')} className="text-gray-700 hover:text-kartar-gold transition-colors duration-300 font-bold">
             Contact
           </button>
         </div>
@@ -72,14 +72,14 @@ const Navbar: React.FC = () => {
       {/* Mobile Menu */}
       {isMobileMenuOpen && (
         <div className="md:hidden bg-white shadow-lg">
-          <div className="flex flex-col items-center space-y-4 py-4">
-            <button onClick={() => scrollToSection('about')} className="text-gray-700 hover:text-kartar-gold font-medium">
+          <div className="flex flex-col items-center space-y-4 py-6">
+            <button onClick={() => scrollToSection('about')} className="text-gray-700 hover:text-kartar-gold font-bold">
               About
             </button>
-            <button onClick={() => scrollToSection('services')} className="text-gray-700 hover:text-kartar-gold font-medium">
+            <button onClick={() => scrollToSection('services')} className="text-gray-700 hover:text-kartar-gold font-bold">
               Services & Products
             </button>
-            <button onClick={() => scrollToSection('contact')} className="text-gray-700 hover:text-kartar-gold font-medium">
+            <button onClick={() => scrollToSection('contact')} className="text-gray-700 hover:text-kartar-gold font-bold">
               Contact
             </button>
           </div>

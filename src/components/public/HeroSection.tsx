@@ -6,11 +6,11 @@ const HeroSection: React.FC = () => {
 
   // Landscape grocery shopping images
   const images = [
-    'https://images.pexels.com/photos/2292953/pexels-photo-2292953.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080',
-    'https://images.pexels.com/photos/4039921/pexels-photo-4039921.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080',
-    'https://images.pexels.com/photos/4039452/pexels-photo-4039452.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080',
+    'https://img.freepik.com/premium-photo/interior-men-s-clothing-store-style-fashion_120897-3074.jpg?w=2000',
+    'https://www.thestatesman.com/wp-content/uploads/2019/03/e-comm.jpg',
     'https://images.pexels.com/photos/5624981/pexels-photo-5624981.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080',
-    'https://images.pexels.com/photos/4039922/pexels-photo-4039922.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080'
+    'https://static.vecteezy.com/system/resources/previews/023/489/783/non_2x/vegetable-farmer-market-counter-colorful-various-fresh-organic-healthy-vegetables-at-grocery-store-healthy-natural-food-concept-generative-ai-photo.jpg'
+    
   ];
 
   const scrollToSection = (sectionId: string) => {
@@ -37,7 +37,7 @@ const HeroSection: React.FC = () => {
   return (
     <div className="w-full">
       {/* Hero Section with Images */}
-      <section className="h-[70vh] flex items-center justify-center relative overflow-hidden">
+      <section className="h-[70vh] flex items-center justify-center relative top-24 overflow-hidden">
       {/* Sliding Background Images */}
       <div className="absolute inset-0">
         {images.map((image, index) => (
@@ -74,13 +74,13 @@ const HeroSection: React.FC = () => {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <button
               onClick={() => scrollToSection('services')}
-              className="px-7 py-3 bg-orange-600 text-white font-semibold rounded-md hover:bg-orange-700 transform hover:scale-105 transition-all duration-300 shadow-lg backdrop-blur-sm"
+              className="px-7 py-3 bg-kartar-gold text-black font-semibold rounded-md hover:bg-kartar-gold transform hover:scale-105 transition-all duration-300 shadow-lg backdrop-blur-sm"
             >
               Explore Our Services
             </button>
             <button
               onClick={() => scrollToSection('contact')}
-              className="px-7 py-3 border-2 border-orange-600 text-orange-600 font-semibold rounded-md hover:bg-orange-600 hover:text-white transition-all duration-300 backdrop-blur-sm"
+              className="px-7 py-3 border-2 border-kartar-gold text-kartar-gold font-semibold rounded-md hover:bg-kartar-gold hover:text-white transition-all duration-300 backdrop-blur-sm"
             >
               Get In Touch
             </button>
@@ -96,7 +96,7 @@ const HeroSection: React.FC = () => {
             onClick={() => setCurrentImageIndex(index)}
             className={`w-2 h-2 rounded-full transition-all duration-300 ${
               index === currentImageIndex 
-                ? 'bg-orange-600 scale-125' 
+                ? 'bg-kartar-gold scale-125' 
                 : 'bg-white/50 hover:bg-white/75'
             }`}
           />
@@ -105,10 +105,10 @@ const HeroSection: React.FC = () => {
     </section>
 
       {/* Arrow Section on White Background */}
-      <div className="bg-white py-8 flex justify-center">
+      <div className="bg-white py-8 flex justify-center my-24">
         <button
           onClick={() => scrollToSection('about')}
-          className="animate-bounce text-orange-600 hover:text-orange-500 transition-colors duration-300"
+          className="animate-bounce text-kartar-gold hover:text-kartar-gold transition-colors duration-300"
         >
           <ArrowDown className="h-8 w-8 mx-auto" />
         </button>
