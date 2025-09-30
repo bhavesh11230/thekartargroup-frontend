@@ -1,10 +1,9 @@
 import axios from 'axios';
 
-const API_BASE_URL = 'http://localhost:5000/api';
 
 // Create axios instance
 const api = axios.create({
-  baseURL:'http://localhost:5000/api',
+  baseURL:'https://thekartargroup-backend.vercel.app/api',
 });
 
 // Add token to requests if available
@@ -16,7 +15,7 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
-// API functions
+// API functionsss
 export const apiService = {
   // Auth
   login: (credentials: { email: string; password: string }) =>
@@ -43,7 +42,6 @@ export const apiService = {
   submitContact: (data: {
     name: string;
     email: string;
-    phone: string;
     message: string;
   }) => api.post('/contact/submit', data),
   getAllContacts: () => api.get('/contact/viewall'),
