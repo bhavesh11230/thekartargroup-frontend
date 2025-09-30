@@ -3,7 +3,7 @@ import axios from 'axios';
 
 // Create axios instance
 const api = axios.create({
-  baseURL:'https://thekartargroup-backend.vercel.app/api',
+  baseURL:'https://thekartargroup-backend.vercel.app/api', // backend hosted url
 });
 
 // Add token to requests if available
