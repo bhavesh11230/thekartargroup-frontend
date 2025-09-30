@@ -170,7 +170,7 @@ const ContactSection: React.FC = () => {
                     required
                     rows={4}
                     className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-kartar-gold focus:border-transparent transition-all duration-300 resize-none"
-                    placeholder="Tell us about your requirements..."
+                    placeholder="Minimum 10 characters required..."
                   />
                 </div>
 

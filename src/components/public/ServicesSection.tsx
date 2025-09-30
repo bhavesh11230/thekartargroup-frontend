@@ -31,76 +31,77 @@ const ServicesSection: React.FC = () => {
   const productsPerPage = 9;
 
   // Fetch categories on mount
-  useEffect(() => {
-    const fetchCategories = async () => {
-      setLoadingCategories(true);
-      try {
-        const res = await apiService.getCategories();
-        const data = res.data?.data || res.data || [];
-        setCategories(data);
+useEffect(() => {
+  const fetchCategories = async () => {
+    setLoadingCategories(true);
+    try {
+      const res = await apiService.getCategories();
+      const data = res.data?.data || res.data || [];
 
-        if (data.length > 0) {
-          setSelectedCategory(data[0]._id);
-        }
-      } catch (error) {
-        toast.error("Failed to load categories");
-        console.error(error);
-      } finally {
-        setLoadingCategories(false);
-      }
-    };
+      // Add a virtual "All" category
+      const allCategory = { _id: "all", name: "All" };
 
-    fetchCategories();
-  }, []);
+      setCategories([allCategory, ...data]);
+      setSelectedCategory("all"); // default to "All"
+    } catch (error) {
+      toast.error("Failed to load categories");
+      console.error(error);
+    } finally {
+      setLoadingCategories(false);
+    }
+  };
+
+  fetchCategories();
+}, []);
+
 
   // Fetch products whenever category changes
-  useEffect(() => {
-    if (!selectedCategory) return;
+useEffect(() => {
+  if (!selectedCategory) return;
 
-    const fetchProducts = async () => {
-      setLoadingProducts(true);
-      try {
+  const fetchProducts = async () => {
+    setLoadingProducts(true);
+    try {
+      let data: any[] = [];
+
+      if (selectedCategory === "all") {
+        // Call your all products endpoint
+        const res = await apiService.getAllCards(); 
+        data = Array.isArray(res.data) ? res.data : res.data.cards || [];
+      } else {
+        // Category-specific endpoint
         const res = await apiService.getCardsByCategory(selectedCategory);
-
-        let data: any[] = [];
-
-        if (Array.isArray(res.data)) {
-          // All products endpoint
-          data = res.data;
-        } else if (Array.isArray(res.data.cards)) {
-          // Products by category endpoint
-          data = res.data.cards;
-        } else {
-          console.warn("Invalid products data", res.data);
-        }
-
-          console.log("Fetched products:", data);
-
-        setProducts(data);
-        setCurrentPage(1);
-      } catch (error) {
-        toast.error("Failed to load products");
-        console.error(error);
-        setProducts([]);
-      } finally {
-        setLoadingProducts(false);
+        data = Array.isArray(res.data) ? res.data : res.data.cards || [];
       }
-    };
 
-    fetchProducts();
-  }, [selectedCategory]);
+      console.log("Fetched products:", data);
+      setProducts(data);
+      setCurrentPage(1);
+    } catch (error) {
+      toast.error("Failed to load products");
+      console.error(error);
+      setProducts([]);
+    } finally {
+      setLoadingProducts(false);
+    }
+  };
+
+  fetchProducts();
+}, [selectedCategory]);
+
 
   const handleCategoryChange = (categoryId: string) => {
     setSelectedCategory(categoryId);
   };
 
   // Pagination
-  const indexOfLastProduct = currentPage * productsPerPage;
-  const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
-  const currentProducts = Array.isArray(products)
-    ? products.slice(indexOfFirstProduct, indexOfLastProduct)
-    : [];
-  const totalPages = Math.ceil(currentProducts.length / productsPerPage) || 1;
+const indexOfLastProduct = currentPage * productsPerPage;
+const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
+const currentProducts = Array.isArray(products)
+  ? products.slice(indexOfFirstProduct, indexOfLastProduct)
+  : [];
+const totalPages = Math.ceil(products.length / productsPerPage) || 1;
+
 
   const handlePageChange = (pageNumber: number) => {
     if (pageNumber < 1 || pageNumber > totalPages) return;
@@ -295,7 +296,7 @@ const ServicesSection: React.FC = () => {
                   disabled={pageNumber === "..."}
                   className={`px-3 py-2 text-sm font-medium rounded-lg transition-all duration-200 ${
                     currentPage === pageNumber
-                      ? "bg-orange-600 text-white shadow-md"
+                      ? "bg-[rgb(212,175,55)] text-white shadow-md"
                       : pageNumber === "..."
                       ? "text-gray-400 cursor-default"
                       : "text-gray-700 bg-white border border-gray-300 hover:bg-gray-100"

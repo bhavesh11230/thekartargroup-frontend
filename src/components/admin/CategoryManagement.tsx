@@ -13,6 +13,7 @@ const CategoryManagement: React.FC = () => {
   const [newCategoryName, setNewCategoryName] = useState('');
   const [loading, setLoading] = useState(true);
   const [creating, setCreating] = useState(false);
+  const [deletingCategoryId, setDeletingCategoryId] = useState<string | null>(null);
 
   // Modal states
   const [showDialog, setShowDialog] = useState(false);
@@ -36,39 +37,35 @@ const CategoryManagement: React.FC = () => {
   };
 
   const handleCreate = async (e: React.FormEvent) => {
-  e.preventDefault();
+    e.preventDefault();
 
-  const trimmedName = newCategoryName.trim();
+    const trimmedName = newCategoryName.trim();
+    if (!trimmedName) {
+      toast.error('Please enter a category name');
+      return;
+    }
 
-  if (!trimmedName) {
-    toast.error('Please enter a category name');
-    return;
-  }
+    const exists = categories.some(
+      (cat) => cat.name.toLowerCase() === trimmedName.toLowerCase()
+    );
+    if (exists) {
+      toast.error('Category already exists');
+      return;
+    }
 
-  // Case-insensitive duplicate check
-  const exists = categories.some(
-    (cat) => cat.name.toLowerCase() === trimmedName.toLowerCase()
-  );
-
-  if (exists) {
-    toast.error('Category already exists');
-    return;
-  }
-
-  try {
-    setCreating(true);
-    await apiService.createCategory({ name: trimmedName });
-    toast.success('Category created successfully');
-    setNewCategoryName('');
-    fetchCategories();
-  } catch (error) {
-    console.error('Error creating category:', error);
-    toast.error('Failed to create category');
-  } finally {
-    setCreating(false);
-  }
-};
-
+    try {
+      setCreating(true);
+      await apiService.createCategory({ name: trimmedName });
+      toast.success('Category created successfully');
+      setNewCategoryName('');
+      fetchCategories();
+    } catch (error) {
+      console.error('Error creating category:', error);
+      toast.error('Failed to create category');
+    } finally {
+      setCreating(false);
+    }
+  };
 
   const confirmDelete = (category: Category) => {
     setSelectedCategory(category);
@@ -79,6 +76,7 @@ const CategoryManagement: React.FC = () => {
     if (!selectedCategory) return;
 
     try {
+      setDeletingCategoryId(selectedCategory._id);
       await apiService.deleteCategory(selectedCategory._id);
       toast.success('Category deleted successfully');
       fetchCategories();
@@ -86,6 +84,7 @@ const CategoryManagement: React.FC = () => {
       console.error('Error deleting category:', error);
       toast.error('Failed to delete category');
     } finally {
+      setDeletingCategoryId(null);
       setShowDialog(false);
       setSelectedCategory(null);
     }
@@ -114,11 +113,7 @@ const CategoryManagement: React.FC = () => {
             disabled={creating}
             className="flex items-center space-x-2 px-6 py-2 bg-kartar-gold text-white rounded-lg hover:bg-kartar-dark disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-300"
           >
-            {creating ? (
-              <Loader2 className="h-4 w-4 animate-spin" />
-            ) : (
-              <Plus className="h-4 w-4" />
-            )}
+            {creating ? <Loader2 className="h-4 w-4 animate-spin" /> : <Plus className="h-4 w-4" />}
             <span>{creating ? 'Creating...' : 'Add Category'}</span>
           </button>
         </form>
@@ -140,9 +135,7 @@ const CategoryManagement: React.FC = () => {
                   key={category._id}
                   className="flex items-center justify-between p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors duration-200"
                 >
-                  <span className="font-medium text-gray-800">
-                    {category.name}
-                  </span>
+                  <span className="font-medium text-gray-800">{category.name}</span>
                   <button
                     onClick={() => confirmDelete(category)}
                     className="flex items-center space-x-2 px-3 py-1 text-red-600 hover:bg-red-50 rounded-lg transition-colors duration-200"
@@ -178,9 +171,14 @@ const CategoryManagement: React.FC = () => {
               </button>
               <button
                 onClick={handleDelete}
-                className="px-4 py-2 rounded-lg bg-red-600 text-white hover:bg-red-700 transition"
+                className="px-4 py-2 rounded-lg bg-red-600 text-white hover:bg-red-700 transition flex items-center justify-center"
+                disabled={deletingCategoryId === selectedCategory._id}
               >
-                Delete
+                {deletingCategoryId === selectedCategory._id ? (
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                ) : (
+                  <span>Delete</span>
+                )}
               </button>
             </div>
           </div>

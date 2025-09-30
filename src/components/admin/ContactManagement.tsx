@@ -16,6 +16,7 @@ const ContactManagement: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [showDialog, setShowDialog] = useState(false);
   const [selectedContact, setSelectedContact] = useState<Contact | null>(null);
+  const [deletingContactId, setDeletingContactId] = useState<string | null>(null);
 
   useEffect(() => {
     fetchContacts();
@@ -25,7 +26,7 @@ const ContactManagement: React.FC = () => {
     try {
       setLoading(true);
       const response = await apiService.getAllContacts();
-      setContacts(response.data.contacts); // <- use .contacts here
+      setContacts(response.data.contacts);
     } catch (error) {
       console.error('Error fetching contacts:', error);
       toast.error('Failed to load contact messages');
@@ -43,6 +44,7 @@ const ContactManagement: React.FC = () => {
     if (!selectedContact) return;
 
     try {
+      setDeletingContactId(selectedContact._id);
       await apiService.deleteContact(selectedContact._id);
       toast.success('Contact message deleted successfully');
       fetchContacts();
@@ -50,6 +52,7 @@ const ContactManagement: React.FC = () => {
       console.error('Error deleting contact:', error);
       toast.error('Failed to delete contact message');
     } finally {
+      setDeletingContactId(null);
       setShowDialog(false);
       setSelectedContact(null);
     }
@@ -159,9 +162,14 @@ const ContactManagement: React.FC = () => {
               </button>
               <button
                 onClick={handleDelete}
-                className="px-4 py-2 rounded-lg bg-red-600 text-white hover:bg-red-700 transition"
+                className="px-4 py-2 rounded-lg bg-red-600 text-white hover:bg-red-700 transition flex items-center justify-center"
+                disabled={deletingContactId === selectedContact._id}
               >
-                Delete
+                {deletingContactId === selectedContact._id ? (
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                ) : (
+                  <span>Delete</span>
+                )}
               </button>
             </div>
           </div>

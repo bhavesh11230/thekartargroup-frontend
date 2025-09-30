@@ -34,12 +34,15 @@ const CardManagement: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
   const [editingCard, setEditingCard] = useState<Card | null>(null);
+  const [deletingCardId, setDeletingCardId] = useState<string | null>(null);
+
   const [formData, setFormData] = useState({
     title: "",
     description: "",
     category: "",
     image: null as File | null,
   });
+  const [oldImageName, setOldImageName] = useState<string>("");
   const [submitting, setSubmitting] = useState(false);
 
   // delete modal state
@@ -84,10 +87,12 @@ const CardManagement: React.FC = () => {
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
+      const file = e.target.files[0];
       setFormData((prev) => ({
         ...prev,
-        image: e.target.files![0],
+        image: file,
       }));
+      setOldImageName(file.name); // show new file name
     }
   };
 
@@ -98,6 +103,7 @@ const CardManagement: React.FC = () => {
       category: "",
       image: null,
     });
+    setOldImageName("");
     setEditingCard(null);
     setShowForm(false);
   };
@@ -149,17 +155,23 @@ const CardManagement: React.FC = () => {
       category: card.category._id,
       image: null,
     });
+    const existingName =
+      card.image?.public_id || card.image?.url?.split("/").pop() || "";
+    setOldImageName(existingName);
     setShowForm(true);
   };
 
-  const handleDelete = async (id: string, title: string) => {
+  const handleDelete = async (id: string) => {
     try {
+      setDeletingCardId(id); // start loader
       await apiService.deleteCard(id);
       toast.success("Card deleted successfully");
       fetchData();
     } catch (error) {
       console.error("Error deleting card:", error);
       toast.error("Failed to delete card");
+    } finally {
+      setDeletingCardId(null); // stop loader
     }
   };
 
@@ -220,6 +232,7 @@ const CardManagement: React.FC = () => {
                     name="description"
                     value={formData.description}
                     onChange={handleInputChange}
+                    placeholder="Minimum 10 characters required..."
                     required
                     rows={4}
                     className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-kartar-gold focus:border-transparent resize-none"
@@ -248,15 +261,17 @@ const CardManagement: React.FC = () => {
 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Image{" "}
-                    {editingCard ? "(Leave empty to keep current image)" : "*"}
+                    Image {editingCard ? "(Leave empty to keep current)" : "*"}
                   </label>
-                  <input
-                    type="file"
-                    accept="image/*"
-                    onChange={handleImageChange}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-kartar-gold focus:border-transparent"
-                  />
+                  <label className="relative cursor-pointer bg-white px-3 py-2 border border-gray-300 rounded-lg shadow-sm text-sm leading-4 font-medium text-gray-700 hover:bg-gray-50 focus-within:ring-2 focus-within:ring-kartar-gold focus-within:border-kartar-gold w-full block text-left">
+                    {oldImageName || "Choose file"}
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={handleImageChange}
+                      className="sr-only"
+                    />
+                  </label>
                 </div>
 
                 <div className="flex space-x-4 pt-4">
@@ -380,16 +395,18 @@ const CardManagement: React.FC = () => {
               <button
                 onClick={async () => {
                   if (deleteConfirm.cardId) {
-                    await handleDelete(
-                      deleteConfirm.cardId,
-                      deleteConfirm.title || ""
-                    );
+                    await handleDelete(deleteConfirm.cardId);
                   }
                   setDeleteConfirm({ open: false });
                 }}
-                className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition"
+                className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition flex items-center justify-center"
+                disabled={deletingCardId === deleteConfirm.cardId}
               >
-                Delete
+                {deletingCardId === deleteConfirm.cardId ? (
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                ) : (
+                  <span>Delete</span>
+                )}
               </button>
             </div>
           </div>
