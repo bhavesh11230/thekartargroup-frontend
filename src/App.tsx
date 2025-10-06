@@ -10,7 +10,6 @@ import PublicWebsite from './components/public/PublicWebsite';
 import AdminLogin from './components/admin/AdminLogin';
 import AdminDashboard from './components/admin/AdminDashboard';
 import ProtectedRoute from './components/admin/ProtectedRoute';
-import ProductDetail from './components/public/ProductDetail';
 
 function App() {
   return (
@@ -20,7 +19,6 @@ function App() {
           {/* Public Route */}
           <Route path="/" element={<PublicWebsite />} />
 
-          <Route path="/product/:id" element={<ProductDetail />} />
           
           {/* Admin Routes */}
           <Route path="/admin" element={<AdminLogin />} />
