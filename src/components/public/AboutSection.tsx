@@ -1,42 +1,64 @@
-import React from 'react';
-import { Award, Users, Globe } from 'lucide-react';
+import React from "react";
+import { Award, Users, Globe } from "lucide-react";
 
 const AboutSection: React.FC = () => {
   return (
-    <section id="about" className="py-20 bg-white w-full">
-      <div className="container mx-auto px-4 max-w-7xl">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-4xl md:text-5xl font-bold text-kartar-gold mb-6">
+    <section id="about" className="py-24 bg-white w-full">
+      <div className="mx-auto px-6 sm:px-10 lg:px-16 xl:px-20 max-w-[1600px]">
+        <div className="max-w-6xl mx-auto text-center">
+          <h2 className="text-4xl md:text-5xl font-bold text-kartar-gold mb-8 tracking-tight">
             About Kartar Group
           </h2>
-          <p className="text-lg text-gray-700 mb-12 leading-relaxed">
-            Established with a vision to excel in diverse business ventures, Kartar Group has grown 
-            into a trusted name across multiple industries. Our commitment to quality, innovation, 
-            and customer satisfaction drives everything we do.
+
+          <p className="text-lg text-gray-700 mb-8 leading-relaxed">
+            Established in the year 2012, we, Kartar Group, are one of the
+            glorious exporters, suppliers, distributors, wholesalers, traders,
+            and retailers of an unlimited compilation of Pharmaceutical and Lab
+            Chemical. Our product range encompasses Industrial Chemicals,
+            Pharmaceutical Chemicals and Pharma Chemicals, which are massively
+            acclaimed for their longer shelf life, precise composition,
+            effective results and purity. Backed by a gigantic product line and
+            good financial position & TQM, we have gained an unmatched
+            reputation in the business.
           </p>
-          
-          <div className="grid md:grid-cols-3 gap-8 mb-16">
-            <div className="bg-white p-8 rounded-lg shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
+
+          <p className="text-lg text-gray-700 mb-14 leading-relaxed">
+            Under the capable leadership of our Founder, Mr. Rachit Wadhwa, a
+            seasoned Internal Auditor with Chartered Accountancy degree from
+            India, have earned an unmatched position in the country and gained
+            massive acceptance of our esteemed customers. Our company is
+            based on the grounds of moral values, principles and ethics.
+          </p>
+
+          <div className="grid md:grid-cols-3 gap-10 max-w-6xl mx-auto">
+            <div className="bg-white p-8 rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-100">
               <Award className="h-12 w-12 text-kartar-gold mx-auto mb-4" />
-              <h3 className="text-xl font-semibold text-gray-800 mb-3">Excellence</h3>
+              <h3 className="text-xl font-semibold text-gray-800 mb-3">
+                Excellence
+              </h3>
               <p className="text-gray-600">
-                Committed to delivering exceptional quality in all our business endeavors.
+                Committed to deliver exceptional quality.
               </p>
             </div>
-            
-            <div className="bg-white p-8 rounded-lg shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
+
+            <div className="bg-white p-8 rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-100">
               <Users className="h-12 w-12 text-kartar-gold mx-auto mb-4" />
-              <h3 className="text-xl font-semibold text-gray-800 mb-3">Partnership</h3>
+              <h3 className="text-xl font-semibold text-gray-800 mb-3">
+                Partnership
+              </h3>
               <p className="text-gray-600">
-                Building lasting relationships with our clients, partners, and communities.
+                Building lasting relationships throughout the supply chain to
+                add impactful value to all stakeholders business.
               </p>
             </div>
-            
-            <div className="bg-white p-8 rounded-lg shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
+
+            <div className="bg-white p-8 rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-100">
               <Globe className="h-12 w-12 text-kartar-gold mx-auto mb-4" />
-              <h3 className="text-xl font-semibold text-gray-800 mb-3">Innovation</h3>
+              <h3 className="text-xl font-semibold text-gray-800 mb-3">
+                Innovation
+              </h3>
               <p className="text-gray-600">
-                Embracing new technologies and methodologies to stay ahead in the market.
+                Embracing new technologies and AI to stay ahead in the market.
               </p>
             </div>
           </div>
