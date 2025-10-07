@@ -5,6 +5,7 @@ import ServicesSection from './ServicesSection';
 import ContactSection from './ContactSection';
 import Footer from './Footer';
 import HeroSection from './HeroSection';
+import WhyChooseUsSection from './WhyChooseUsSection';
 
 const PublicWebsite: React.FC = () => {
   return (
@@ -14,6 +15,7 @@ const PublicWebsite: React.FC = () => {
         <HeroSection />
         <AboutSection />
         <ServicesSection />
+        <WhyChooseUsSection />
         <ContactSection />
       </main>
       <Footer />
