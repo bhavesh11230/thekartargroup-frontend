@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+ import React, { useState } from 'react';
 import { apiService } from '../../utils/api';
 import { toast } from 'react-toastify';
 import { Mail, MessageCircle, Send } from 'lucide-react';
@@ -20,7 +20,7 @@ const ContactSection: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!formData.name || !formData.email || !formData.message) {
       toast.error('Please fill in all required fields');
       return;
@@ -47,6 +47,7 @@ const ContactSection: React.FC = () => {
     <section id="contact" className="py-20 bg-white w-full">
       <div className="container mx-auto px-4 max-w-7xl">
         <div className="max-w-6xl mx-auto">
+          {/* Section Header */}
           <div className="text-center mb-12">
             <h2 className="text-4xl md:text-5xl font-bold text-kartar-gold mb-6">
               Contact Us
@@ -56,54 +57,55 @@ const ContactSection: React.FC = () => {
             </p>
           </div>
 
-          <div className="grid lg:grid-cols-2 gap-12 items-start">
+          {/* Two-column Layout */}
+          <div className="grid lg:grid-cols-2 gap-12 items-start lg:items-center">
             {/* Contact Information */}
             <div className="space-y-8">
-              <div>
-                <h3 className="text-2xl font-semibold text-kartar-gold mb-4">
-                  Get in Touch
-                </h3>
-                <div className="space-y-4">
-                  <div className="flex items-center space-x-3">
-                    <Mail className="h-5 w-5 text-kartar-gold flex-shrink-0" />
-                    <a 
-                      href="mailto:info@thekartargroup.in"
-                      className="text-gray-700 hover:text-kartar-gold transition-colors duration-300 text-sm"
-                    >
-                      info@thekartargroup.in
-                    </a>
-                  </div>
-                  <div className="flex items-center space-x-3">
-                    <MessageCircle className="h-5 w-5 text-kartar-gold flex-shrink-0" />
-                    <a 
-                      href="https://wa.me/MOBILE_NUMBER"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-gray-700 hover:text-kartar-gold transition-colors duration-300 text-sm"
-                    >
-                      Contact on WhatsApp
-                    </a>
-                  </div>
+              <h3 className="text-2xl text-center font-semibold text-kartar-gold mb-4">
+                Get in Touch
+              </h3>
+
+              <div className="space-y-4 text-center lg:text-left">
+                <div className="flex justify-center lg:justify-start items-center space-x-3">
+                  <Mail className="h-5 w-5 text-kartar-gold flex-shrink-0" />
+                  <a
+                    href="mailto:info@thekartargroup.in"
+                    className="text-gray-700 hover:text-kartar-gold transition-colors duration-300 text-sm"
+                  >
+                    info@thekartargroup.in
+                  </a>
+                </div>
+
+                <div className="flex justify-center lg:justify-start items-center space-x-3">
+                  <MessageCircle className="h-5 w-5 text-kartar-gold flex-shrink-0" />
+                  <a
+                    href="https://wa.me/MOBILE_NUMBER"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-gray-700 hover:text-kartar-gold transition-colors duration-300 text-sm"
+                  >
+                    Contact on WhatsApp
+                  </a>
                 </div>
               </div>
 
               <div className="bg-kartar-cream p-6 rounded-lg shadow-md">
-                <h4 className="text-lg font-semibold text-gray-800 mb-3">
+                <h4 className="text-lg font-semibold text-gray-800 mb-3 text-center lg:text-left">
                   Why Choose Kartar Group?
                 </h4>
-                <ul className="space-y-2 text-gray-600 text-sm">
+                <ul className="space-y-2 text-gray-600 text-sm text-center lg:text-left">
                   <li>• Proven track record of excellence</li>
                   <li>• Comprehensive solutions across industries</li>
                   <li>• Dedicated customer support</li>
                   <li>• Innovative and reliable services</li>
                 </ul>
               </div>
-              
+
               <div className="bg-kartar-cream p-6 rounded-lg shadow-md">
-                <h4 className="text-lg font-semibold text-gray-800 mb-3">
+                <h4 className="text-lg font-semibold text-gray-800 mb-3 text-center lg:text-left">
                   Business Hours
                 </h4>
-                <div className="space-y-2 text-gray-600 text-sm">
+                <div className="space-y-2 text-gray-600 text-sm text-center lg:text-left">
                   <div className="flex justify-between">
                     <span>Monday - Friday:</span>
                     <span>9:00 AM - 6:00 PM</span>
@@ -122,9 +124,10 @@ const ContactSection: React.FC = () => {
 
             {/* Contact Form */}
             <div className="bg-white p-6 rounded-lg shadow-md">
-              <h3 className="text-xl font-semibold text-kartar-gold mb-6">
+              <h3 className="text-2xl text-center font-semibold text-kartar-gold mb-6">
                 Send us a Message
               </h3>
+
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
                   <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">

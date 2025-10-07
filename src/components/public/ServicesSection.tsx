@@ -70,7 +70,7 @@ const ServicesSection: React.FC = () => {
       <div className="container mx-auto px-4 max-w-7xl">
         <div className="text-center mb-12">
           <h2 className="text-4xl md:text-5xl font-bold text-kartar-gold mb-6">
-            Our Products & Services
+           Products Portfolio
           </h2>
           <p className="text-lg text-gray-700 max-w-2xl mx-auto">
             Explore our exclusive categories — hover to see more from each one.
