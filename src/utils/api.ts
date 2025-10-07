@@ -46,6 +46,7 @@ export const apiService = {
     name: string;
     email: string;
     message: string;
+    requestCatalogue: String;
   }) => api.post('/contact/submit', data),
   getAllContacts: () => api.get('/contact/viewall'),
   deleteContact: (id: string) => api.delete(`/contact/${id}`),

@@ -1,4 +1,4 @@
- import React, { useState } from 'react';
+import React, { useState } from 'react';
 import { apiService } from '../../utils/api';
 import { toast } from 'react-toastify';
 import { Mail, MessageCircle, Send } from 'lucide-react';
@@ -7,16 +7,23 @@ const ContactSection: React.FC = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    message: ''
+    message: '',
+    requestCatalogue: false
   });
   const [loading, setLoading] = useState(false);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
-  };
+  const handleChange = (
+  e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+) => {
+  const { name, type, value } = e.target;
+  const isCheckbox = type === 'checkbox';
+  setFormData({
+    ...formData,
+    [name]: isCheckbox
+      ? (e.target as HTMLInputElement).checked
+      : value
+  });
+};
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -33,7 +40,8 @@ const ContactSection: React.FC = () => {
       setFormData({
         name: '',
         email: '',
-        message: ''
+        message: '',
+        requestCatalogue: false
       });
     } catch (error) {
       console.error('Error submitting contact form:', error);
@@ -100,26 +108,6 @@ const ContactSection: React.FC = () => {
                   <li>• Innovative and reliable services</li>
                 </ul>
               </div>
-
-              <div className="bg-kartar-cream p-6 rounded-lg shadow-md">
-                <h4 className="text-lg font-semibold text-gray-800 mb-3 text-center lg:text-left">
-                  Business Hours
-                </h4>
-                <div className="space-y-2 text-gray-600 text-sm text-center lg:text-left">
-                  <div className="flex justify-between">
-                    <span>Monday - Friday:</span>
-                    <span>9:00 AM - 6:00 PM</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>Saturday:</span>
-                    <span>10:00 AM - 4:00 PM</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>Sunday:</span>
-                    <span>Closed</span>
-                  </div>
-                </div>
-              </div>
             </div>
 
             {/* Contact Form */}
@@ -175,6 +163,21 @@ const ContactSection: React.FC = () => {
                     className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-kartar-gold focus:border-transparent transition-all duration-300 resize-none"
                     placeholder="Minimum 10 characters required..."
                   />
+                </div>
+
+                {/* ✅ Request Catalogue Checkbox */}
+                <div className="flex items-center space-x-2">
+                  <input
+                    type="checkbox"
+                    id="requestCatalogue"
+                    name="requestCatalogue"
+                    checked={formData.requestCatalogue}
+                    onChange={handleChange}
+                    className="h-4 w-4 text-kartar-gold focus:ring-kartar-gold border-gray-300 rounded"
+                  />
+                  <label htmlFor="requestCatalogue" className="text-sm text-gray-700">
+                    Do you want to request for a catalogue?
+                  </label>
                 </div>
 
                 <button
