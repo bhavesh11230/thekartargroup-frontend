@@ -41,16 +41,19 @@ const Navbar: React.FC = () => {
 
         {/* Desktop Navigation Links */}
         <div className="hidden md:flex items-center space-x-8">
-          <button onClick={() => scrollToSection('about')} className="text-gray-700 hover:text-kartar-gold transition-colors duration-300 font-bold">
-            About
-          </button>
-          <button onClick={() => scrollToSection('services')} className="text-gray-700 hover:text-kartar-gold transition-colors duration-300 font-bold">
-            Services & Products
-          </button>
-          <button onClick={() => scrollToSection('contact')} className="text-gray-700 hover:text-kartar-gold transition-colors duration-300 font-bold">
-            Contact
-          </button>
-        </div>
+  <button onClick={() => scrollToSection('about')} className="text-gray-700 hover:text-kartar-gold transition-colors duration-300 font-bold">
+    About
+  </button>
+  <button onClick={() => scrollToSection('services')} className="text-gray-700 hover:text-kartar-gold transition-colors duration-300 font-bold">
+    Services & Products
+  </button>
+  <button onClick={() => scrollToSection('why-choose-us')} className="text-gray-700 hover:text-kartar-gold transition-colors duration-300 font-bold">
+    Why Choose Us
+  </button>
+  <button onClick={() => scrollToSection('contact')} className="text-gray-700 hover:text-kartar-gold transition-colors duration-300 font-bold">
+    Contact
+  </button>
+</div>
 
         {/* Mobile Menu Button */}
         <div className="md:hidden">
@@ -71,20 +74,23 @@ const Navbar: React.FC = () => {
 
       {/* Mobile Menu */}
       {isMobileMenuOpen && (
-        <div className="md:hidden bg-white shadow-lg">
-          <div className="flex flex-col items-center space-y-4 py-6">
-            <button onClick={() => scrollToSection('about')} className="text-gray-700 hover:text-kartar-gold font-bold">
-              About
-            </button>
-            <button onClick={() => scrollToSection('services')} className="text-gray-700 hover:text-kartar-gold font-bold">
-              Services & Products
-            </button>
-            <button onClick={() => scrollToSection('contact')} className="text-gray-700 hover:text-kartar-gold font-bold">
-              Contact
-            </button>
-          </div>
-        </div>
-      )}
+  <div className="md:hidden bg-white shadow-lg">
+    <div className="flex flex-col items-center space-y-4 py-6">
+      <button onClick={() => scrollToSection('about')} className="text-gray-700 hover:text-kartar-gold font-bold">
+        About
+      </button>
+      <button onClick={() => scrollToSection('services')} className="text-gray-700 hover:text-kartar-gold font-bold">
+        Services & Products
+      </button>
+      <button onClick={() => scrollToSection('why-choose-us')} className="text-gray-700 hover:text-kartar-gold font-bold">
+        Why Choose Us
+      </button>
+      <button onClick={() => scrollToSection('contact')} className="text-gray-700 hover:text-kartar-gold font-bold">
+        Contact
+      </button>
+    </div>
+  </div>
+)}
     </nav>
   );
 };
