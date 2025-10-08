@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+ import React, { useState } from 'react';
 import { apiService } from '../../utils/api';
 import { toast } from 'react-toastify';
 import { Mail, MessageCircle, Send } from 'lucide-react';
@@ -8,22 +8,22 @@ const ContactSection: React.FC = () => {
     name: '',
     email: '',
     message: '',
-    requestCatalogue: false
+    requestCatalogue: false,
   });
   const [loading, setLoading] = useState(false);
 
   const handleChange = (
-  e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-) => {
-  const { name, type, value } = e.target;
-  const isCheckbox = type === 'checkbox';
-  setFormData({
-    ...formData,
-    [name]: isCheckbox
-      ? (e.target as HTMLInputElement).checked
-      : value
-  });
-};
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, type, value } = e.target;
+    const isCheckbox = type === 'checkbox';
+    setFormData({
+      ...formData,
+      [name]: isCheckbox
+        ? (e.target as HTMLInputElement).checked
+        : value,
+    });
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -41,7 +41,7 @@ const ContactSection: React.FC = () => {
         name: '',
         email: '',
         message: '',
-        requestCatalogue: false
+        requestCatalogue: false,
       });
     } catch (error) {
       console.error('Error submitting contact form:', error);
@@ -52,7 +52,10 @@ const ContactSection: React.FC = () => {
   };
 
   return (
-    <section id="contact" className="py-20 bg-white w-full">
+    <section
+      id="contact"
+      className="pt-10 pb-20 bg-white w-full scroll-mt-24 md:scroll-mt-28"
+    >
       <div className="container mx-auto px-4 max-w-7xl">
         <div className="max-w-6xl mx-auto">
           {/* Section Header */}
@@ -118,7 +121,10 @@ const ContactSection: React.FC = () => {
 
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
-                  <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
+                  <label
+                    htmlFor="name"
+                    className="block text-sm font-medium text-gray-700 mb-1"
+                  >
                     Name *
                   </label>
                   <input
@@ -134,7 +140,10 @@ const ContactSection: React.FC = () => {
                 </div>
 
                 <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+                  <label
+                    htmlFor="email"
+                    className="block text-sm font-medium text-gray-700 mb-1"
+                  >
                     Email *
                   </label>
                   <input
@@ -150,7 +159,10 @@ const ContactSection: React.FC = () => {
                 </div>
 
                 <div>
-                  <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">
+                  <label
+                    htmlFor="message"
+                    className="block text-sm font-medium text-gray-700 mb-1"
+                  >
                     Message *
                   </label>
                   <textarea

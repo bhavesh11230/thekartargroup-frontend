@@ -1,9 +1,9 @@
-import React from "react";
+ import React from "react";
 import { Handshake, Clock, Award } from "lucide-react";
 
 const WhyChooseUsSection: React.FC = () => {
   return (
-    <section id="why-choose-us" className="py-24 bg-white w-full">
+    <section id="why-choose-us" className="pt-32 pb-24 bg-white w-full">
       <div className="mx-auto px-6 sm:px-10 lg:px-16 xl:px-20 max-w-[1600px]">
         <div className="max-w-6xl mx-auto text-center">
           <h2 className="text-4xl md:text-5xl font-bold text-kartar-gold mb-8 tracking-tight">
@@ -36,7 +36,10 @@ const WhyChooseUsSection: React.FC = () => {
                 Commitment to Excellence & Timely Delivery 
               </h3>
               <p className="text-gray-600">
-                Our strong network of Indian manufacturers and efficient logistics ensure every order is fulfilled with precision, quality assurance, and on-time dispatch — every single time. – From industrial chemicals and leather goods to traditional Indian items, garments, and agricultural products, we deliver authentic, high-quality goods that meet global standards.
+                Our strong network of Indian manufacturers and efficient logistics ensure every order is fulfilled with precision, 
+                quality assurance, and on-time dispatch — every single time. 
+                From industrial chemicals and leather goods to traditional Indian items, garments, and agricultural products, 
+                we deliver authentic, high-quality goods that meet global standards.
               </p>
             </div>
 
@@ -47,7 +50,8 @@ const WhyChooseUsSection: React.FC = () => {
                 Commitment to Excellence & Timely Delivery
               </h3>
               <p className="text-gray-600">
-                Our strong network of Indian manufacturers and efficient logistics ensure every order is fulfilled with precision, quality assurance, and on-time dispatch — every single time.
+                Our strong network of Indian manufacturers and efficient logistics ensure every order is fulfilled with precision, 
+                quality assurance, and on-time dispatch — every single time.
               </p>
             </div>
           </div>

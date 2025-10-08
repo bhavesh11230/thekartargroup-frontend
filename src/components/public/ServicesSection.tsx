@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+ import React, { useState, useEffect } from "react";
 import { apiService } from "../../utils/api";
 import { toast } from "react-toastify";
 
@@ -47,8 +47,8 @@ const ServicesSection: React.FC = () => {
     {} as Record<string, Product[]>
   );
 
-  // Handle hover to cycle images
-  const handleMouseEnter = (category: string) => {
+  // Handle hover (only on heading)
+  const handleHeadingMouseEnter = (category: string) => {
     const interval = setInterval(() => {
       setHoverIndex((prev) => {
         const total = groupedByCategory[category]?.length || 1;
@@ -56,24 +56,25 @@ const ServicesSection: React.FC = () => {
         return { ...prev, [category]: (currentIndex + 1) % total };
       });
     }, 1500);
-
     (window as any)[`${category}-interval`] = interval;
   };
 
-  const handleMouseLeave = (category: string) => {
+  const handleHeadingMouseLeave = (category: string) => {
     setHoverIndex((prev) => ({ ...prev, [category]: 0 }));
     clearInterval((window as any)[`${category}-interval`]);
   };
 
   return (
-    <section id="services" className="py-20 bg-kartar-cream w-full">
+    // ✅ This ID must match navbar’s scrollToSection('services')
+    <section id="services" className="pt-10 pb-20 bg-kartar-cream w-full scroll-mt-24">
       <div className="container mx-auto px-4 max-w-7xl">
+        {/* Section Title */}
         <div className="text-center mb-12">
           <h2 className="text-4xl md:text-5xl font-bold text-kartar-gold mb-6">
-           Products Portfolio
+            Product Portfolio
           </h2>
           <p className="text-lg text-gray-700 max-w-2xl mx-auto">
-            Explore our exclusive categories — hover to see more from each one.
+            Explore our exclusive categories — hover on each heading to see more from that category.
           </p>
         </div>
 
@@ -95,24 +96,26 @@ const ServicesSection: React.FC = () => {
                 return (
                   <div
                     key={category}
-                    onMouseEnter={() => handleMouseEnter(category)}
-                    onMouseLeave={() => handleMouseLeave(category)}
-                    className="relative bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden group"
+                    className="relative bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden"
                   >
                     {/* Image */}
                     <div className="h-60 w-full overflow-hidden relative">
                       <img
                         src={currentProduct.image.url}
                         alt={currentProduct.title}
-                        className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700 ease-in-out"
+                        className="w-full h-full object-cover transform transition-transform duration-700 ease-in-out group-hover:scale-110"
                       />
-                      <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition-all duration-500"></div>
+                      <div className="absolute inset-0 bg-black bg-opacity-0 hover:bg-opacity-30 transition-all duration-500"></div>
                     </div>
 
                     {/* Card content */}
                     <div className="p-6 text-center flex flex-col justify-between h-[180px]">
                       <div>
-                        <h3 className="text-xl font-semibold text-kartar-secondary mb-2">
+                        <h3
+                          className="text-xl font-semibold text-kartar-secondary mb-2 cursor-pointer hover:text-kartar-gold transition-colors duration-300"
+                          onMouseEnter={() => handleHeadingMouseEnter(category)}
+                          onMouseLeave={() => handleHeadingMouseLeave(category)}
+                        >
                           {category}
                         </h3>
                         <p className="text-gray-600 text-sm line-clamp-3 leading-relaxed">
@@ -120,7 +123,7 @@ const ServicesSection: React.FC = () => {
                         </p>
                       </div>
 
-                      {/* Small indicators for extra products */}
+                      {/* Dots Indicator */}
                       {items.length > 1 && (
                         <div className="flex justify-center mt-4 space-x-1">
                           {items.map((_, i) => (
