@@ -15,7 +15,7 @@ const WhyChooseUsSection: React.FC = () => {
             and professionalism in every transaction.
           </p>
 
-          <div className="grid md:grid-cols-3 gap-10 max-w-6xl mx-auto">
+          <div className="grid md:grid-cols-2 gap-10 max-w-6xl mx-auto">
             {/* Point 1 */}
             <div className="bg-white p-8 rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-100">
               <Handshake className="h-12 w-12 text-kartar-gold mx-auto mb-4" />
@@ -43,17 +43,7 @@ const WhyChooseUsSection: React.FC = () => {
               </p>
             </div>
 
-            {/* Point 3 */}
-            <div className="bg-white p-8 rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-100">
-              <Clock className="h-12 w-12 text-kartar-gold mx-auto mb-4" />
-              <h3 className="text-xl font-semibold text-gray-800 mb-3">
-                Commitment to Excellence & Timely Delivery
-              </h3>
-              <p className="text-gray-600">
-                Our strong network of Indian manufacturers and efficient logistics ensure every order is fulfilled with precision, 
-                quality assurance, and on-time dispatch — every single time.
-              </p>
-            </div>
+           
           </div>
         </div>
       </div>

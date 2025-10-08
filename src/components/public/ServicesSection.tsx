@@ -1,4 +1,4 @@
- import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { apiService } from "../../utils/api";
 import { toast } from "react-toastify";
 
@@ -6,7 +6,7 @@ interface Product {
   _id: string;
   title: string;
   description: string;
-  image: { url: string; public_id: string };
+  images: { url: string; public_id: string }[];
   category?: {
     _id: string;
     name: string;
@@ -17,8 +17,9 @@ const ServicesSection: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [loadingProducts, setLoadingProducts] = useState(false);
   const [hoverIndex, setHoverIndex] = useState<{ [key: string]: number }>({});
+  const intervalRefs = useRef<{ [key: string]: NodeJS.Timeout }>({}); // manage intervals safely
 
-  // Fetch all products
+  // Fetch products
   useEffect(() => {
     const fetchAllProducts = async () => {
       setLoadingProducts(true);
@@ -47,86 +48,85 @@ const ServicesSection: React.FC = () => {
     {} as Record<string, Product[]>
   );
 
-  // Handle hover (only on heading)
-  const handleHeadingMouseEnter = (category: string) => {
-    const interval = setInterval(() => {
+  // Hover image animation
+  const handleMouseEnter = (category: string) => {
+    if (intervalRefs.current[category]) return; // prevent multiple intervals
+    intervalRefs.current[category] = setInterval(() => {
       setHoverIndex((prev) => {
-        const total = groupedByCategory[category]?.length || 1;
+        const totalImages =
+          groupedByCategory[category]?.flatMap((item) => item.images).length || 1;
         const currentIndex = prev[category] || 0;
-        return { ...prev, [category]: (currentIndex + 1) % total };
+        return { ...prev, [category]: (currentIndex + 1) % totalImages };
       });
     }, 1500);
-    (window as any)[`${category}-interval`] = interval;
   };
 
-  const handleHeadingMouseLeave = (category: string) => {
+  const handleMouseLeave = (category: string) => {
+    clearInterval(intervalRefs.current[category]);
+    intervalRefs.current[category] = undefined!;
     setHoverIndex((prev) => ({ ...prev, [category]: 0 }));
-    clearInterval((window as any)[`${category}-interval`]);
   };
 
   return (
-    // ✅ This ID must match navbar’s scrollToSection('services')
     <section id="services" className="pt-10 pb-20 bg-kartar-cream w-full scroll-mt-24">
       <div className="container mx-auto px-4 max-w-7xl">
-        {/* Section Title */}
         <div className="text-center mb-12">
           <h2 className="text-4xl md:text-5xl font-bold text-kartar-gold mb-6">
             Product Portfolio
           </h2>
           <p className="text-lg text-gray-700 max-w-2xl mx-auto">
-            Explore our exclusive categories — hover on each heading to see more from that category.
+            Explore our exclusive categories — hover on any card to see more from that category.
           </p>
         </div>
 
         {/* Products Grid */}
         <div className="mb-8">
           {loadingProducts ? (
-            <p className="text-center text-gray-500 py-12">
-              Loading products...
-            </p>
+            <p className="text-center text-gray-500 py-12">Loading products...</p>
           ) : Object.keys(groupedByCategory).length > 0 ? (
-            <div
-              id="products-grid"
-              className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
-            >
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
               {Object.entries(groupedByCategory).map(([category, items]) => {
+                const allImages = items.flatMap((item) => item.images || []);
                 const currentIndex = hoverIndex[category] || 0;
-                const currentProduct = items[currentIndex];
+                const description = items[0]?.description || "";
 
                 return (
                   <div
                     key={category}
-                    className="relative bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden"
+                    className="relative bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden cursor-pointer"
+                    onMouseEnter={() => handleMouseEnter(category)}
+                    onMouseLeave={() => handleMouseLeave(category)}
                   >
-                    {/* Image */}
+                    {/* Image with smooth fade */}
                     <div className="h-60 w-full overflow-hidden relative">
-                      <img
-                        src={currentProduct.image.url}
-                        alt={currentProduct.title}
-                        className="w-full h-full object-cover transform transition-transform duration-700 ease-in-out group-hover:scale-110"
-                      />
+                      {allImages.map((img, i) => (
+                        <img
+                          key={i}
+                          src={img.url}
+                          alt={category}
+                          className={`absolute top-0 left-0 w-full h-full object-cover transition-opacity duration-700 ${
+                            i === currentIndex ? "opacity-100 z-10" : "opacity-0 z-0"
+                          }`}
+                        />
+                      ))}
                       <div className="absolute inset-0 bg-black bg-opacity-0 hover:bg-opacity-30 transition-all duration-500"></div>
                     </div>
 
-                    {/* Card content */}
+                    {/* Card Content */}
                     <div className="p-6 text-center flex flex-col justify-between h-[180px]">
                       <div>
-                        <h3
-                          className="text-xl font-semibold text-kartar-secondary mb-2 cursor-pointer hover:text-kartar-gold transition-colors duration-300"
-                          onMouseEnter={() => handleHeadingMouseEnter(category)}
-                          onMouseLeave={() => handleHeadingMouseLeave(category)}
-                        >
+                        <h3 className="text-xl font-semibold text-kartar-secondary mb-2 hover:text-kartar-gold transition-colors duration-300">
                           {category}
                         </h3>
                         <p className="text-gray-600 text-sm line-clamp-3 leading-relaxed">
-                          {currentProduct.description}
+                          {description}
                         </p>
                       </div>
 
                       {/* Dots Indicator */}
-                      {items.length > 1 && (
+                      {allImages.length > 1 && (
                         <div className="flex justify-center mt-4 space-x-1">
-                          {items.map((_, i) => (
+                          {allImages.map((_, i) => (
                             <span
                               key={i}
                               className={`h-2 w-2 rounded-full ${
@@ -145,9 +145,7 @@ const ServicesSection: React.FC = () => {
             </div>
           ) : (
             <div className="text-center py-12">
-              <p className="text-gray-600 text-lg">
-                No products available at the moment.
-              </p>
+              <p className="text-gray-600 text-lg">No products available at the moment.</p>
             </div>
           )}
         </div>

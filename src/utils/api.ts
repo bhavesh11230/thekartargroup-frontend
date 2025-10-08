@@ -2,12 +2,12 @@ import axios from 'axios';
 
 
 // Create axios instance
-const api = axios.create({
-  baseURL:'https://thekartargroup-backend.vercel.app/api', // backend hosted url
-});
 // const api = axios.create({
-//   baseURL:'http://localhost:5000/api', // backend hosted url
+//   baseURL:'https://thekartargroup-backend.vercel.app/api', // backend hosted url
 // });
+const api = axios.create({
+  baseURL:'http://localhost:5000/api', // backend hosted url
+});
 
 // Add token to requests if available
 api.interceptors.request.use((config) => {
