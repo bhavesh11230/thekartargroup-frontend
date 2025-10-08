@@ -33,12 +33,10 @@ const WhyChooseUsSection: React.FC = () => {
             <div className="bg-white p-8 rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-100">
               <Award className="h-12 w-12 text-kartar-gold mx-auto mb-4" />
               <h3 className="text-xl font-semibold text-gray-800 mb-3">
-                Commitment to Excellence
+                Commitment to Excellence & Timely Delivery 
               </h3>
               <p className="text-gray-600">
-                Our strong network of Indian manufacturers and efficient logistics 
-                ensures every order is fulfilled with precision, quality assurance, 
-                and global standard compliance — every single time.
+                Our strong network of Indian manufacturers and efficient logistics ensure every order is fulfilled with precision, quality assurance, and on-time dispatch — every single time. – From industrial chemicals and leather goods to traditional Indian items, garments, and agricultural products, we deliver authentic, high-quality goods that meet global standards.
               </p>
             </div>
 
@@ -46,12 +44,10 @@ const WhyChooseUsSection: React.FC = () => {
             <div className="bg-white p-8 rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-100">
               <Clock className="h-12 w-12 text-kartar-gold mx-auto mb-4" />
               <h3 className="text-xl font-semibold text-gray-800 mb-3">
-                Timely Delivery
+                Commitment to Excellence & Timely Delivery
               </h3>
               <p className="text-gray-600">
-                From industrial chemicals and leather goods to traditional Indian 
-                items and agricultural products, we ensure on-time dispatch with 
-                no compromise on quality or customer satisfaction.
+                Our strong network of Indian manufacturers and efficient logistics ensure every order is fulfilled with precision, quality assurance, and on-time dispatch — every single time.
               </p>
             </div>
           </div>
