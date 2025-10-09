@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { apiService } from '../../utils/api';
 import { toast } from 'react-toastify';
-import { Trash2, Loader2, Mail, Calendar } from 'lucide-react';
+import { Trash2, Loader2, Mail, Calendar, FileText, CheckCircle, XCircle } from 'lucide-react';
 
 interface Contact {
   _id: string;
   name: string;
   email: string;
   message: string;
+  requestCatalogue: string;
+  status: string;
   createdAt: string;
 }
 
@@ -96,9 +98,16 @@ const ContactManagement: React.FC = () => {
               >
                 <div className="flex items-start justify-between mb-4">
                   <div className="flex-1">
-                    <h3 className="text-lg font-semibold text-gray-800 mb-2">
-                      {contact.name}
-                    </h3>
+                    <div className="flex items-center gap-3 mb-2">
+                      <h3 className="text-lg font-semibold text-gray-800">
+                        {contact.name}
+                      </h3>
+                      {contact.status === 'new' && (
+                        <span className="px-2 py-1 text-xs font-medium bg-blue-100 text-blue-800 rounded-full">
+                          New
+                        </span>
+                      )}
+                    </div>
 
                     <div className="flex flex-wrap gap-4 mb-4">
                       <div className="flex items-center space-x-2 text-gray-600">
@@ -114,6 +123,22 @@ const ContactManagement: React.FC = () => {
                       <div className="flex items-center space-x-2 text-gray-500">
                         <Calendar className="h-4 w-4" />
                         <span>{formatDate(contact.createdAt)}</span>
+                      </div>
+
+                      <div className="flex items-center space-x-2 text-gray-600">
+                        <FileText className="h-4 w-4" />
+                        <span className="font-medium">Catalogue Request:</span>
+                        {contact.requestCatalogue === 'yes' ? (
+                          <span className="flex items-center space-x-1 text-green-600">
+                            <CheckCircle className="h-4 w-4" />
+                            <span>Yes</span>
+                          </span>
+                        ) : (
+                          <span className="flex items-center space-x-1 text-gray-500">
+                            <XCircle className="h-4 w-4" />
+                            <span>No</span>
+                          </span>
+                        )}
                       </div>
                     </div>
 

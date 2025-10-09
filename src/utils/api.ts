@@ -2,7 +2,8 @@ import axios from 'axios';
 
 // Create axios instance
 const api = axios.create({
-  baseURL: 'https://thekartargroup-backend.vercel.app/api',
+  // baseURL: 'https://thekartargroup-backend.vercel.app/api',
+  baseURL: 'http://localhost:5000/api',
   timeout: 30000, // 30 second timeout for image uploads
 });
 
