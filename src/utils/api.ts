@@ -7,7 +7,7 @@ const api = axios.create({
   timeout: 30000, // 30 second timeout for image uploads
 });
 
-// Add token to requests if available
+// Add token to requests if available...
 api.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem('token');
