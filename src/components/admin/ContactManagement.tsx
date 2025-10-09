@@ -1,7 +1,15 @@
-import React, { useState, useEffect } from 'react';
-import { apiService } from '../../utils/api';
-import { toast } from 'react-toastify';
-import { Trash2, Loader2, Mail, Calendar, FileText, CheckCircle, XCircle } from 'lucide-react';
+import React, { useState, useEffect } from "react";
+import { apiService } from "../../utils/api";
+import { toast } from "react-toastify";
+import {
+  Trash2,
+  Loader2,
+  Mail,
+  Calendar,
+  FileText,
+  CheckCircle,
+  XCircle,
+} from "lucide-react";
 
 interface Contact {
   _id: string;
@@ -18,7 +26,9 @@ const ContactManagement: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [showDialog, setShowDialog] = useState(false);
   const [selectedContact, setSelectedContact] = useState<Contact | null>(null);
-  const [deletingContactId, setDeletingContactId] = useState<string | null>(null);
+  const [deletingContactId, setDeletingContactId] = useState<string | null>(
+    null
+  );
 
   useEffect(() => {
     fetchContacts();
@@ -30,8 +40,8 @@ const ContactManagement: React.FC = () => {
       const response = await apiService.getAllContacts();
       setContacts(response.data.contacts);
     } catch (error) {
-      console.error('Error fetching contacts:', error);
-      toast.error('Failed to load contact messages');
+      console.error("Error fetching contacts:", error);
+      toast.error("Failed to load contact messages");
     } finally {
       setLoading(false);
     }
@@ -48,11 +58,11 @@ const ContactManagement: React.FC = () => {
     try {
       setDeletingContactId(selectedContact._id);
       await apiService.deleteContact(selectedContact._id);
-      toast.success('Contact message deleted successfully');
+      toast.success("Contact message deleted successfully");
       fetchContacts();
     } catch (error) {
-      console.error('Error deleting contact:', error);
-      toast.error('Failed to delete contact message');
+      console.error("Error deleting contact:", error);
+      toast.error("Failed to delete contact message");
     } finally {
       setDeletingContactId(null);
       setShowDialog(false);
@@ -61,12 +71,12 @@ const ContactManagement: React.FC = () => {
   };
 
   const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit'
+    return new Date(dateString).toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
     });
   };
 
@@ -94,41 +104,41 @@ const ContactManagement: React.FC = () => {
             {contacts.map((contact) => (
               <div
                 key={contact._id}
-                className="border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow duration-200"
+                className="border border-gray-200 rounded-lg p-4 sm:p-6 hover:shadow-md transition-shadow duration-200"
               >
-                <div className="flex items-start justify-between mb-4">
-                  <div className="flex-1">
-                    <div className="flex items-center gap-3 mb-2">
-                      <h3 className="text-lg font-semibold text-gray-800">
+                <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 mb-4">
+                  <div className="flex-1 min-w-0">
+                    <div className="flex flex-wrap items-center gap-2 mb-2">
+                      <h3 className="text-lg font-semibold text-gray-800 break-words">
                         {contact.name}
                       </h3>
-                      {contact.status === 'new' && (
+                      {contact.status === "new" && (
                         <span className="px-2 py-1 text-xs font-medium bg-blue-100 text-blue-800 rounded-full">
                           New
                         </span>
                       )}
                     </div>
 
-                    <div className="flex flex-wrap gap-4 mb-4">
+                    <div className="flex flex-wrap gap-3 mb-4 break-all">
                       <div className="flex items-center space-x-2 text-gray-600">
-                        <Mail className="h-4 w-4" />
+                        <Mail className="h-4 w-4 shrink-0" />
                         <a
                           href={`mailto:${contact.email}`}
-                          className="hover:text-kartar-gold transition-colors duration-200"
+                          className="hover:text-kartar-gold transition-colors duration-200 truncate max-w-[180px] sm:max-w-none"
                         >
                           {contact.email}
                         </a>
                       </div>
 
                       <div className="flex items-center space-x-2 text-gray-500">
-                        <Calendar className="h-4 w-4" />
-                        <span>{formatDate(contact.createdAt)}</span>
+                        <Calendar className="h-4 w-4 shrink-0" />
+                        <span className="truncate">{formatDate(contact.createdAt)}</span>
                       </div>
 
                       <div className="flex items-center space-x-2 text-gray-600">
-                        <FileText className="h-4 w-4" />
+                        <FileText className="h-4 w-4 shrink-0" />
                         <span className="font-medium">Catalogue Request:</span>
-                        {contact.requestCatalogue === 'yes' ? (
+                        {contact.requestCatalogue === "yes" ? (
                           <span className="flex items-center space-x-1 text-green-600">
                             <CheckCircle className="h-4 w-4" />
                             <span>Yes</span>
@@ -146,7 +156,7 @@ const ContactManagement: React.FC = () => {
                       <h4 className="font-medium text-gray-800 mb-2">
                         Message:
                       </h4>
-                      <p className="text-gray-700 leading-relaxed">
+                      <p className="text-gray-700 leading-relaxed break-words">
                         {contact.message}
                       </p>
                     </div>
@@ -154,7 +164,7 @@ const ContactManagement: React.FC = () => {
 
                   <button
                     onClick={() => confirmDelete(contact)}
-                    className="flex items-center space-x-2 px-3 py-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors duration-200 ml-4"
+                    className="flex items-center justify-center space-x-2 px-3 py-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors duration-200 self-end sm:self-auto"
                   >
                     <Trash2 className="h-4 w-4" />
                     <span>Delete</span>
@@ -168,13 +178,13 @@ const ContactManagement: React.FC = () => {
 
       {/* Delete Confirmation Dialog */}
       {showDialog && selectedContact && (
-        <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+        <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50 px-4">
           <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-md">
             <h3 className="text-lg font-semibold text-gray-800 mb-4">
               Confirm Delete
             </h3>
             <p className="text-gray-600 mb-6">
-              Are you sure you want to delete the message from{' '}
+              Are you sure you want to delete the message from{" "}
               <span className="font-medium">{selectedContact.name}</span>?
             </p>
 
