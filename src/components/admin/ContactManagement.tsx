@@ -17,7 +17,6 @@ interface Contact {
   email: string;
   message: string;
   requestCatalogue: string;
-  status: string;
   createdAt: string;
 }
 
@@ -112,11 +111,6 @@ const ContactManagement: React.FC = () => {
                       <h3 className="text-lg font-semibold text-gray-800 break-words">
                         {contact.name}
                       </h3>
-                      {contact.status === "new" && (
-                        <span className="px-2 py-1 text-xs font-medium bg-blue-100 text-blue-800 rounded-full">
-                          New
-                        </span>
-                      )}
                     </div>
 
                     <div className="flex flex-wrap gap-3 mb-4 break-all">
@@ -132,7 +126,9 @@ const ContactManagement: React.FC = () => {
 
                       <div className="flex items-center space-x-2 text-gray-500">
                         <Calendar className="h-4 w-4 shrink-0" />
-                        <span className="truncate">{formatDate(contact.createdAt)}</span>
+                        <span className="truncate">
+                          {formatDate(contact.createdAt)}
+                        </span>
                       </div>
 
                       <div className="flex items-center space-x-2 text-gray-600">
