@@ -1,4 +1,4 @@
- import React from "react";
+import React from "react";
 import { Award, Users, Globe } from "lucide-react";
 
 const AboutSection: React.FC = () => {
@@ -14,23 +14,23 @@ const AboutSection: React.FC = () => {
           </h2>
 
           <p className="text-lg text-gray-700 mb-8 leading-relaxed">
-            Established in the year 2012, we, Kartar Group, are one of the
-            glorious exporters, suppliers, distributors, wholesalers, traders,
-            and retailers of an unlimited compilation of Pharmaceutical and Lab
-            Chemical. Our product range encompasses Industrial Chemicals,
-            Pharmaceutical Chemicals and Pharma Chemicals, which are massively
-            acclaimed for their longer shelf life, precise composition,
-            effective results and purity. Backed by a gigantic product line and
-            good financial position & TQM, we have gained an unmatched
-            reputation in the business.
+            Founded in 2012, Kartar Group is a diversified exporter, supplier,
+            and trading company delivering a wide range of quality products
+            across multiple industries. Our core portfolio includes
+            pharmaceutical and laboratory chemicals, known for their purity,
+            precise formulation, and reliable performance. Alongside chemicals,
+            we also cater to global markets with agriculture products, leather
+            goods, garments, handicrafts, and more, ensuring quality and
+            consistency in every segment we serve.
           </p>
 
           <p className="text-lg text-gray-700 mb-14 leading-relaxed">
-            Under the capable leadership of our Founder, Mr. Rachit Wadhwa, a
-            seasoned Internal Auditor with Chartered Accountancy degree from
-            India, we have earned an unmatched position in the country and
-            gained massive acceptance of our esteemed customers. Our company is
-            based on the grounds of moral values, principles, and ethics.
+            Guided by the vision of our Founder, Mr. Rachit Wadhwa — a Chartered
+            Accountant and experienced Internal Auditor — Kartar Group has built
+            a strong reputation for trust, transparency, and ethical business
+            practices. With a commitment to excellence and customer
+            satisfaction, we continue to grow as a reliable name in
+            international trade.
           </p>
 
           <div className="grid md:grid-cols-3 gap-10 max-w-6xl mx-auto">

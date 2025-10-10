@@ -1,4 +1,4 @@
- import React, { useState } from 'react';
+import React, { useState } from 'react';
 import { apiService } from '../../utils/api';
 import { toast } from 'react-toastify';
 import { Mail, MessageCircle, Send } from 'lucide-react';
@@ -90,7 +90,7 @@ const ContactSection: React.FC = () => {
                 <div className="flex justify-center lg:justify-start items-center space-x-3">
                   <MessageCircle className="h-5 w-5 text-kartar-gold flex-shrink-0" />
                   <a
-                    href="https://wa.me/MOBILE_NUMBER"
+                    href="https://wa.me/9890237399"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-gray-700 hover:text-kartar-gold transition-colors duration-300 text-sm"
@@ -98,18 +98,6 @@ const ContactSection: React.FC = () => {
                     Contact on WhatsApp
                   </a>
                 </div>
-              </div>
-
-              <div className="bg-kartar-cream p-6 rounded-lg shadow-md">
-                <h4 className="text-lg font-semibold text-gray-800 mb-3 text-center lg:text-left">
-                  Why Choose Kartar Group?
-                </h4>
-                <ul className="space-y-2 text-gray-600 text-sm text-center lg:text-left">
-                  <li>• Proven track record of excellence</li>
-                  <li>• Comprehensive solutions across industries</li>
-                  <li>• Dedicated customer support</li>
-                  <li>• Innovative and reliable services</li>
-                </ul>
               </div>
             </div>
 

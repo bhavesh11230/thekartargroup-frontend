@@ -17,9 +17,8 @@ const ServicesSection: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [loadingProducts, setLoadingProducts] = useState(false);
   const [hoverIndex, setHoverIndex] = useState<{ [key: string]: number }>({});
-  const intervalRefs = useRef<{ [key: string]: NodeJS.Timeout }>({}); // manage intervals safely
+  const intervalRefs = useRef<{ [key: string]: NodeJS.Timeout }>({});
 
-  // Fetch products
   useEffect(() => {
     const fetchAllProducts = async () => {
       setLoadingProducts(true);
@@ -37,7 +36,6 @@ const ServicesSection: React.FC = () => {
     fetchAllProducts();
   }, []);
 
-  // Group products by category
   const groupedByCategory: Record<string, Product[]> = products.reduce(
     (acc, product) => {
       const categoryName = product.category?.name || "Uncategorized";
@@ -48,9 +46,8 @@ const ServicesSection: React.FC = () => {
     {} as Record<string, Product[]>
   );
 
-  // Hover image animation
   const handleMouseEnter = (category: string) => {
-    if (intervalRefs.current[category]) return; // prevent multiple intervals
+    if (intervalRefs.current[category]) return;
     intervalRefs.current[category] = setInterval(() => {
       setHoverIndex((prev) => {
         const totalImages =
@@ -79,7 +76,6 @@ const ServicesSection: React.FC = () => {
           </p>
         </div>
 
-        {/* Products Grid */}
         <div className="mb-8">
           {loadingProducts ? (
             <p className="text-center text-gray-500 py-12">Loading products...</p>
@@ -88,7 +84,6 @@ const ServicesSection: React.FC = () => {
               {Object.entries(groupedByCategory).map(([category, items]) => {
                 const allImages = items.flatMap((item) => item.images || []);
                 const currentIndex = hoverIndex[category] || 0;
-                const description = items[0]?.description || "";
 
                 return (
                   <div
@@ -97,7 +92,6 @@ const ServicesSection: React.FC = () => {
                     onMouseEnter={() => handleMouseEnter(category)}
                     onMouseLeave={() => handleMouseLeave(category)}
                   >
-                    {/* Image with smooth fade */}
                     <div className="h-60 w-full overflow-hidden relative">
                       {allImages.map((img, i) => (
                         <img
@@ -112,18 +106,11 @@ const ServicesSection: React.FC = () => {
                       <div className="absolute inset-0 bg-black bg-opacity-0 hover:bg-opacity-30 transition-all duration-500"></div>
                     </div>
 
-                    {/* Card Content */}
-                    <div className="p-6 text-center flex flex-col justify-between h-[180px]">
-                      <div>
-                        <h3 className="text-xl font-semibold text-kartar-secondary mb-2 hover:text-kartar-gold transition-colors duration-300">
-                          {category}
-                        </h3>
-                        <p className="text-gray-600 text-sm line-clamp-3 leading-relaxed">
-                          {description}
-                        </p>
-                      </div>
+                    <div className="p-6 text-center flex flex-col justify-between h-[120px]">
+                      <h3 className="text-xl font-semibold text-kartar-secondary hover:text-kartar-gold transition-colors duration-300">
+                        {category}
+                      </h3>
 
-                      {/* Dots Indicator */}
                       {allImages.length > 1 && (
                         <div className="flex justify-center mt-4 space-x-1">
                           {allImages.map((_, i) => (

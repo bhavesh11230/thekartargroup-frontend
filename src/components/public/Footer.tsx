@@ -19,9 +19,9 @@ const Footer: React.FC = () => {
           {/* Address and Contact */}
           <div className="text-center md:text-left">
             <h3 className="text-lg font-semibold mb-2">Contact Us</h3>
-            <p className="text-gray-200">123 Business Street, Mumbai, India</p>
-            <p className="text-gray-200">Email: <a href="mailto:info@kartargroup.com" className="underline">info@kartargroup.com</a></p>
-            <p className="text-gray-200">Phone: +91 98765 43210</p>
+            <p className="text-gray-200">Aundh, Pune, Maharashtra-411007 India</p>
+            <p className="text-gray-200">Email: <a href="mailto:info@thekartargroup.in" className="underline">info@thekartargroup.in</a></p>
+            <p className="text-gray-200">Phone: +91 98902 37399</p>
           </div>
 
           {/* Rights and Tagline */}
