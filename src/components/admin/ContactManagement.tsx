@@ -15,6 +15,7 @@ interface Contact {
   _id: string;
   name: string;
   email: string;
+  organization?: string;
   message: string;
   requestCatalogue: string;
   createdAt: string;
@@ -112,7 +113,15 @@ const ContactManagement: React.FC = () => {
                         {contact.name}
                       </h3>
                     </div>
-
+                    {contact.organization && (
+                      <div className="flex items-center space-x-2 text-gray-600 mb-2">
+                        <FileText className="h-4 w-4 shrink-0" />
+                        <span className="font-medium">Organization:</span>
+                        <span className="text-gray-700 break-words">
+                          {contact.organization}
+                        </span>
+                      </div>
+                    )}
                     <div className="flex flex-wrap gap-3 mb-4 break-all">
                       <div className="flex items-center space-x-2 text-gray-600">
                         <Mail className="h-4 w-4 shrink-0" />

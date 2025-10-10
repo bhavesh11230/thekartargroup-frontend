@@ -1,13 +1,14 @@
-import React, { useState } from 'react';
-import { apiService } from '../../utils/api';
-import { toast } from 'react-toastify';
-import { Mail, MessageCircle, Send } from 'lucide-react';
+import React, { useState } from "react";
+import { apiService } from "../../utils/api";
+import { toast } from "react-toastify";
+import { Mail, MessageCircle, Send } from "lucide-react";
 
 const ContactSection: React.FC = () => {
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    message: '',
+    name: "",
+    email: "",
+    organization: "", 
+    message: "",
     requestCatalogue: false,
   });
   const [loading, setLoading] = useState(false);
@@ -16,12 +17,10 @@ const ContactSection: React.FC = () => {
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, type, value } = e.target;
-    const isCheckbox = type === 'checkbox';
+    const isCheckbox = type === "checkbox";
     setFormData({
       ...formData,
-      [name]: isCheckbox
-        ? (e.target as HTMLInputElement).checked
-        : value,
+      [name]: isCheckbox ? (e.target as HTMLInputElement).checked : value,
     });
   };
 
@@ -29,23 +28,24 @@ const ContactSection: React.FC = () => {
     e.preventDefault();
 
     if (!formData.name || !formData.email || !formData.message) {
-      toast.error('Please fill in all required fields');
+      toast.error("Please fill in all required fields");
       return;
     }
 
     try {
       setLoading(true);
       await apiService.submitContact(formData);
-      toast.success('Message sent successfully! We will get back to you soon.');
+      toast.success("Message sent successfully! We will get back to you soon.");
       setFormData({
-        name: '',
-        email: '',
-        message: '',
+        name: "",
+        email: "",
+        organization: "",
+        message: "",
         requestCatalogue: false,
       });
     } catch (error) {
-      console.error('Error submitting contact form:', error);
-      toast.error('Failed to send message. Please try again.');
+      console.error("Error submitting contact form:", error);
+      toast.error("Failed to send message. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -64,20 +64,21 @@ const ContactSection: React.FC = () => {
               Contact Us
             </h2>
             <p className="text-lg text-gray-700">
-              Get in touch with us to discuss your requirements or ask any questions.
+              Get in touch with us to discuss your requirements or ask any
+              questions.
             </p>
           </div>
 
           {/* Two-column Layout */}
           <div className="grid lg:grid-cols-2 gap-12 items-start lg:items-center">
             {/* Contact Information */}
-            <div className="space-y-8">
-              <h3 className="text-2xl text-center font-semibold text-kartar-gold mb-4">
+            <div className="flex flex-col justify-center items-center h-full space-y-6 text-center">
+              <h3 className="text-2xl font-semibold text-kartar-gold">
                 Get in Touch
               </h3>
 
-              <div className="space-y-4 text-center lg:text-left">
-                <div className="flex justify-center lg:justify-start items-center space-x-3">
+              <div className="space-y-4">
+                <div className="flex justify-center items-center space-x-3">
                   <Mail className="h-5 w-5 text-kartar-gold flex-shrink-0" />
                   <a
                     href="mailto:info@thekartargroup.in"
@@ -87,7 +88,7 @@ const ContactSection: React.FC = () => {
                   </a>
                 </div>
 
-                <div className="flex justify-center lg:justify-start items-center space-x-3">
+                <div className="flex justify-center items-center space-x-3">
                   <MessageCircle className="h-5 w-5 text-kartar-gold flex-shrink-0" />
                   <a
                     href="https://wa.me/9890237399"
@@ -146,6 +147,25 @@ const ContactSection: React.FC = () => {
                   />
                 </div>
 
+                {/* Organization Name field */}
+                <div>
+                  <label
+                    htmlFor="organization"
+                    className="block text-sm font-medium text-gray-700 mb-1"
+                  >
+                    Organization Name
+                  </label>
+                  <input
+                    type="text"
+                    id="organization"
+                    name="organization"
+                    value={formData.organization}
+                    onChange={handleChange}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-kartar-gold focus:border-transparent transition-all duration-300"
+                    placeholder="Your organization name"
+                  />
+                </div>
+
                 <div>
                   <label
                     htmlFor="message"
@@ -175,7 +195,10 @@ const ContactSection: React.FC = () => {
                     onChange={handleChange}
                     className="h-4 w-4 text-kartar-gold focus:ring-kartar-gold border-gray-300 rounded"
                   />
-                  <label htmlFor="requestCatalogue" className="text-sm text-gray-700">
+                  <label
+                    htmlFor="requestCatalogue"
+                    className="text-sm text-gray-700"
+                  >
                     Do you want to request for a catalogue?
                   </label>
                 </div>

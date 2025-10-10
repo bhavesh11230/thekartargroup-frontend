@@ -3,7 +3,6 @@ import axios from 'axios';
 // Create axios instance
 const api = axios.create({
   baseURL: 'https://thekartargroup-backend.vercel.app/api',
-  // baseURL: 'http://localhost:5000/api',
   timeout: 30000, // 30 second timeout for image uploads
 });
 
@@ -91,6 +90,7 @@ export const apiService = {
     name: string;
     email: string;
     message: string;
+    organization: string;
     requestCatalogue: String;
   }) => api.post('/contact/submit', data),
   getAllContacts: () => api.get('/contact/viewall'),
