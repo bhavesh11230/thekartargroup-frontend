@@ -37,7 +37,6 @@ const ConfirmToast = ({ closeToast, onConfirm, message }: any) => (
 interface Card {
   _id: string;
   title: string;
-  description: string;
   images: { public_id: string; url: string }[];
   category: {
     _id: string;
@@ -62,7 +61,6 @@ const CardManagement: React.FC = () => {
 
   const [formData, setFormData] = useState({
     title: "",
-    description: "",
     category: "",
     images: [] as File[],
   });
@@ -116,7 +114,7 @@ const CardManagement: React.FC = () => {
   };
 
   const resetForm = () => {
-    setFormData({ title: "", description: "", category: "", images: [] });
+    setFormData({ title: "", category: "", images: [] });
     setOldImageName("");
     setEditingCard(null);
     setShowForm(false);
@@ -124,7 +122,7 @@ const CardManagement: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!formData.title || !formData.description || !formData.category) {
+    if (!formData.title || !formData.category) {
       toast.error("Please fill in all required fields");
       return;
     }
@@ -137,7 +135,6 @@ const CardManagement: React.FC = () => {
       setSubmitting(true);
       const formDataObj = new FormData();
       formDataObj.append("title", formData.title);
-      formDataObj.append("description", formData.description);
       formDataObj.append("category", formData.category);
       formData.images.forEach((file) => formDataObj.append("images", file));
 
@@ -168,7 +165,6 @@ const CardManagement: React.FC = () => {
     setEditingCard(card);
     setFormData({
       title: card.title,
-      description: card.description,
       category: card.category._id,
       images: [],
     });
@@ -305,20 +301,7 @@ const CardManagement: React.FC = () => {
                     className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-kartar-gold focus:border-transparent"
                   />
                 </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Description *
-                  </label>
-                  <textarea
-                    name="description"
-                    value={formData.description}
-                    onChange={handleInputChange}
-                    placeholder="Minimum 10 characters required..."
-                    required
-                    rows={4}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-kartar-gold focus:border-transparent resize-none"
-                  />
-                </div>
+               
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
                     Category *
@@ -451,9 +434,7 @@ const CardManagement: React.FC = () => {
 </div>
 
               <h3 className="text-lg font-semibold mt-3">{card.title}</h3>
-              <p className="text-gray-600 text-sm line-clamp-2">
-                {card.description}
-              </p>
+              
               <p className="text-gray-500 text-xs mt-1">
                 Category: {card.category?.name || "N/A"}
               </p>
