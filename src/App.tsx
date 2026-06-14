@@ -17,19 +17,7 @@ function App() {
       <div className="App">
         <Routes>
           {/* Public Route */}
-          {/* <Route path="/" element={<PublicWebsite />} />
 
-          
-          {/* Admin Routes */}
-          <Route path="/admin" element={<AdminLogin />} />
-          <Route 
-            path="/admin/dashboard" 
-            element={
-              <ProtectedRoute>
-                <AdminDashboard />
-              </ProtectedRoute>
-            } 
-          /> */}
           <h1 className="text-4xl font-bold text-blue-700 mb-4">
   Website Under Maintenance
 </h1>
