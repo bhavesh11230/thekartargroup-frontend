@@ -15,24 +15,24 @@ function App() {
   return (
     <Router>
       <div className="App">
-        {/* <Routes> */}
+        <Routes>
           {/* Public Route */}
+          <Route path="/" element={<PublicWebsite />} />
 
-          <h1 className="text-4xl font-bold text-blue-700 mb-4">
-  Website Under Maintenance
-</h1>
-
-<p className="text-gray-700 text-lg">
-  The website is currently under development and maintenance.
-  We are working to provide an improved experience.
-</p>
-
-<p className="text-gray-600 mt-3">
-  Please check back again shortly.
-</p>
-        {/* </Routes> */}
+          
+          {/* Admin Routes */}
+          <Route path="/admin" element={<AdminLogin />} />
+          <Route 
+            path="/admin/dashboard" 
+            element={
+              <ProtectedRoute>
+                <AdminDashboard />
+              </ProtectedRoute>
+            } 
+          />
+        </Routes>
         
-        {/* <ToastContainer
+        <ToastContainer
           position="top-right"
           autoClose={3000}
           hideProgressBar={false}
@@ -43,7 +43,7 @@ function App() {
           draggable
           pauseOnHover
           className="toast-container"
-        /> */}
+        />
       </div>
     </Router>
   );
