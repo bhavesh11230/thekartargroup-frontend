@@ -17,7 +17,7 @@ function App() {
       <div className="App">
         <Routes>
           {/* Public Route */}
-          <Route path="/" element={<PublicWebsite />} />
+          {/* <Route path="/" element={<PublicWebsite />} />
 
           
           {/* Admin Routes */}
@@ -29,10 +29,22 @@ function App() {
                 <AdminDashboard />
               </ProtectedRoute>
             } 
-          />
+          /> */}
+          <h1 className="text-4xl font-bold text-blue-700 mb-4">
+  Website Under Maintenance
+</h1>
+
+<p className="text-gray-700 text-lg">
+  The website is currently under development and maintenance.
+  We are working to provide an improved experience.
+</p>
+
+<p className="text-gray-600 mt-3">
+  Please check back again shortly.
+</p>
         </Routes>
         
-        <ToastContainer
+        {/* <ToastContainer
           position="top-right"
           autoClose={3000}
           hideProgressBar={false}
@@ -43,7 +55,7 @@ function App() {
           draggable
           pauseOnHover
           className="toast-container"
-        />
+        /> */}
       </div>
     </Router>
   );
