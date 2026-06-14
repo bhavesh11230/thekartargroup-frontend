@@ -15,7 +15,7 @@ function App() {
   return (
     <Router>
       <div className="App">
-        <Routes>
+        {/* <Routes> */}
           {/* Public Route */}
 
           <h1 className="text-4xl font-bold text-blue-700 mb-4">
@@ -30,7 +30,7 @@ function App() {
 <p className="text-gray-600 mt-3">
   Please check back again shortly.
 </p>
-        </Routes>
+        {/* </Routes> */}
         
         {/* <ToastContainer
           position="top-right"
